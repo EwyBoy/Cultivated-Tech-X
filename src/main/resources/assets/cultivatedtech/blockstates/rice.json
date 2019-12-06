@@ -1,0 +1,17 @@
+{
+  "variants": {
+    "age=0": { "model": "cultivatedtech:block/crop/rice/rice0" },
+    "age=1": { "model": "cultivatedtech:block/crop/rice/rice1" },
+    "age=2": { "model": "cultivatedtech:block/crop/rice/rice2" },
+    "age=3": { "model": "cultivatedtech:block/crop/rice/rice3" },
+    "age=4": { "model": "cultivatedtech:block/crop/rice/rice4" },
+    "age=5": { "model": "cultivatedtech:block/crop/rice/rice5" },
+    "age=6": { "model": "cultivatedtech:block/crop/rice/rice6" },
+    "age=7,bottom=false": {
+      "model": "cultivatedtech:block/crop/rice/rice7_top"
+    },
+    "age=7,bottom=true": {
+      "model": "cultivatedtech:block/crop/rice/rice7_bottom"
+    }
+  }
+}

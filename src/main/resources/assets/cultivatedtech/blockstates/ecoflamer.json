@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "enabled=false": {
+      "model": "cultivatedtech:block/ecoflamer"
+    },
+    "enabled=true": {
+      "model": "cultivatedtech:block/ecoflamer"
+    }
+  }
+}

@@ -1,0 +1,97 @@
+---- Minecraft Crash Report ----
+// Shall we play a game?
+
+Time: 02/12/19 18:26
+Description: Ticking block entity
+
+java.lang.IllegalArgumentException: Cannot set property IntegerProperty{name=state, clazz=class java.lang.Integer, values=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]} to -1 on Block{cultivatedtech:generator}, it is not an allowed value
+	at net.minecraft.state.StateHolder.with(StateHolder.java:111) ~[?:?] {re:classloading}
+	at com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity.tick(GeneratorTileEntity.java:22) ~[?:?] {re:classloading}
+	at net.minecraft.world.World.func_217391_K(World.java:671) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.world.server.ServerWorld.tick(ServerWorld.java:370) ~[?:?] {re:classloading}
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:865) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:800) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:118) ~[?:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:646) [?:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_181] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at net.minecraft.state.StateHolder.with(StateHolder.java:111)
+	at com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity.tick(GeneratorTileEntity.java:22)
+
+-- Block entity being ticked --
+Details:
+	Name: cultivatedtech:generator // com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity
+	Block: Block{cultivatedtech:generator}[enabled=false,state=0]
+	Block location: World: (276,64,-354), Chunk: (at 4,4,14 in 17,-23; contains blocks 272,0,-368 to 287,255,-353), Region: (0,-1; contains chunks 0,-32 to 31,-1, blocks 0,0,-512 to 511,255,-1)
+	Block: Block{cultivatedtech:generator}[enabled=false,state=0]
+	Block location: World: (276,64,-354), Chunk: (at 4,4,14 in 17,-23; contains blocks 272,0,-368 to 287,255,-353), Region: (0,-1; contains chunks 0,-32 to 31,-1, blocks 0,0,-512 to 511,255,-1)
+Stacktrace:
+	at net.minecraft.world.World.func_217391_K(World.java:671)
+	at net.minecraft.world.server.ServerWorld.tick(ServerWorld.java:370)
+
+-- Affected level --
+Details:
+	All players: 1 total; [ServerPlayerEntity['Dev'/120, l='New World', x=274.18, y=63.00, z=-353.62]]
+	Chunk stats: ServerChunkCache: 2997
+	Level dimension: DimensionType{minecraft:overworld}
+	Level name: New World
+	Level seed: -2159619748065723306
+	Level generator: ID 00 - default, ver 1. Features enabled: true
+	Level generator options: {}
+	Level spawn location: World: (176,73,-80), Chunk: (at 0,4,0 in 11,-5; contains blocks 176,0,-80 to 191,255,-65), Region: (0,-1; contains chunks 0,-32 to 31,-1, blocks 0,0,-512 to 511,255,-1)
+	Level time: 551325 game time, 6000 day time
+	Level storage version: 0x04ABD - Anvil
+	Level weather: Rain time: 37776 (now: false), thunder time: 61103 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: true
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:865)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:800)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:118)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:646)
+	at java.lang.Thread.run(Thread.java:748)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.14.4
+	Minecraft Version ID: 1.14.4
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_181, Oracle Corporation
+	Java VM Version: Dynamic Code Evolution 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 340021088 bytes (324 MB) / 983019520 bytes (937 MB) up to 3101687808 bytes (2958 MB)
+	CPUs: 8
+	JVM Flags: 1 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump
+	ModLauncher: 4.1.0+62+5bfa59b
+	ModLauncher launch target: fmluserdevclient
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		/eventbus-1.0.0-service.jar eventbus PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar object_holder_definalize PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar runtime_enum_extender PLUGINSERVICE 
+		/accesstransformers-1.0.1-milestone.0.1+94458e7-shadowed.jar accesstransformer PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar capability_inject_definalize PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar runtimedistcleaner PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar fml TRANSFORMATIONSERVICE 
+	FML: 28.1
+	Forge: net.minecraftforge:28.1.90
+	FML Language Providers: 
+		javafml@28.1
+		minecraft@1
+	Mod List: 
+		client-extra.jar Minecraft {minecraft@1.14.4 DONE}
+		forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar Forge {forge@28.1.85 DONE}
+		Bibliotheca-1.14.4-1.4.0_mapped_snapshot_20191020-1.14.3.jar Bibliotheca {bibliotheca@1.4.0 DONE}
+		main Cultivated-Tech {cultivatedtech@NONE DONE}
+		World-Stripper-1.7.2-1.14.4_mapped_snapshot_20191020-1.14.3.jar World Stripper {worldstripper@1.7.2 DONE}
+		Hwyla-1.10.6-B67_1.14.4_mapped_snapshot_20191020-1.14.3.jar Waila {waila@version DONE}
+		jei-1.14.4-6.0.0.25_mapped_snapshot_20191020-1.14.3.jar Just Enough Items {jei@6.0.0.25 DONE}
+	Player Count: 1 / 8; [ServerPlayerEntity['Dev'/120, l='New World', x=274.18, y=63.00, z=-353.62]]
+	Data Packs: vanilla, mod:bibliotheca, mod:cultivatedtech, mod:forge, mod:jei, mod:waila, mod:worldstripper
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'forge'

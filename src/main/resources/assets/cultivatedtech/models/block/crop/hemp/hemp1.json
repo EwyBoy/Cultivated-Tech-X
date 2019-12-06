@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "cultivatedtech:block/crop/hemp/hemp1"
+  }
+}

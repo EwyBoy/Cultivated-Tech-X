@@ -1,0 +1,29 @@
+{
+  "minecraft:story/lava_bucket": {
+    "criteria": {
+      "lava_bucket": "2019-11-16 22:02:47 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/gold_nugget_from_smelting": {
+    "criteria": {
+      "has_golden_hoe": "2019-11-16 22:02:40 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/gold_nugget_from_blasting": {
+    "criteria": {
+      "has_golden_hoe": "2019-11-16 22:02:40 +0100"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:forest": "2019-11-16 22:03:03 +0100",
+      "minecraft:mountains": "2019-11-16 22:03:04 +0100",
+      "minecraft:plains": "2019-11-16 22:02:12 +0100"
+    },
+    "done": false
+  },
+  "DataVersion": 1976
+}

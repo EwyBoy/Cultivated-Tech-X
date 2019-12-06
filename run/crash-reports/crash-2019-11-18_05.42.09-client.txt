@@ -1,0 +1,165 @@
+---- Minecraft Crash Report ----
+// My bad.
+
+Time: 18/11/19 05:42
+Description: Ticking entity
+
+java.lang.NullPointerException: Ticking entity
+	at net.minecraft.world.IWorldReader$1.tryAdvance(IWorldReader.java:183) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading}
+	at com.google.common.collect.CollectSpliterators$1FlatMapSpliterator.tryAdvance(CollectSpliterators.java:226) ~[guava-21.0.jar:?] {}
+	at java.util.stream.StreamSpliterators$WrappingSpliterator.lambda$initPartialTraversalState$0(StreamSpliterators.java:294) ~[?:1.8.0_181] {}
+	at java.util.stream.StreamSpliterators$AbstractWrappingSpliterator.fillBuffer(StreamSpliterators.java:206) ~[?:1.8.0_181] {}
+	at java.util.stream.StreamSpliterators$AbstractWrappingSpliterator.doAdvance(StreamSpliterators.java:169) ~[?:1.8.0_181] {}
+	at java.util.stream.StreamSpliterators$WrappingSpliterator.tryAdvance(StreamSpliterators.java:300) ~[?:1.8.0_181] {}
+	at java.util.Spliterators$1Adapter.hasNext(Spliterators.java:681) ~[?:1.8.0_181] {}
+	at net.minecraft.client.entity.player.ClientPlayerEntity.updateAutoJump(ClientPlayerEntity.java:962) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.client.entity.player.ClientPlayerEntity.move(ClientPlayerEntity.java:895) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.entity.LivingEntity.travel(LivingEntity.java:1975) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.travel(PlayerEntity.java:1547) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.LivingEntity.livingTick(LivingEntity.java:2373) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.livingTick(PlayerEntity.java:520) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.entity.player.ClientPlayerEntity.livingTick(ClientPlayerEntity.java:812) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.entity.LivingEntity.tick(LivingEntity.java:2187) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.tick(PlayerEntity.java:235) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.entity.player.ClientPlayerEntity.tick(ClientPlayerEntity.java:191) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.client.world.ClientWorld.func_217418_a(ClientWorld.java:168) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.world.World.func_217390_a(World.java:734) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.world.ClientWorld.tickEntities(ClientWorld.java:136) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1400) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:904) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.Minecraft.run(Minecraft.java:384) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.main.Main.main(Main.java:128) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_181] {}
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_181] {}
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_181] {}
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_181] {}
+	at net.minecraftforge.userdev.FMLUserdevClientLaunchProvider.lambda$launchService$0(FMLUserdevClientLaunchProvider.java:55) ~[forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:37) [modlauncher-4.1.0.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54) [modlauncher-4.1.0.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:72) [modlauncher-4.1.0.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:81) [modlauncher-4.1.0.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:65) [modlauncher-4.1.0.jar:?] {}
+	at net.minecraftforge.userdev.LaunchTesting.main(LaunchTesting.java:101) [forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Client thread
+Stacktrace:
+	at net.minecraft.world.IWorldReader$1.tryAdvance(IWorldReader.java:183)
+	at com.google.common.collect.CollectSpliterators$1FlatMapSpliterator.tryAdvance(CollectSpliterators.java:226)
+	at java.util.stream.StreamSpliterators$WrappingSpliterator.lambda$initPartialTraversalState$0(StreamSpliterators.java:294)
+	at java.util.stream.StreamSpliterators$AbstractWrappingSpliterator.fillBuffer(StreamSpliterators.java:206)
+	at java.util.stream.StreamSpliterators$AbstractWrappingSpliterator.doAdvance(StreamSpliterators.java:169)
+	at java.util.stream.StreamSpliterators$WrappingSpliterator.tryAdvance(StreamSpliterators.java:300)
+	at java.util.Spliterators$1Adapter.hasNext(Spliterators.java:681)
+	at net.minecraft.client.entity.player.ClientPlayerEntity.updateAutoJump(ClientPlayerEntity.java:962)
+	at net.minecraft.client.entity.player.ClientPlayerEntity.move(ClientPlayerEntity.java:895)
+	at net.minecraft.entity.LivingEntity.travel(LivingEntity.java:1975)
+	at net.minecraft.entity.player.PlayerEntity.travel(PlayerEntity.java:1547)
+	at net.minecraft.entity.LivingEntity.livingTick(LivingEntity.java:2373)
+	at net.minecraft.entity.player.PlayerEntity.livingTick(PlayerEntity.java:520)
+	at net.minecraft.client.entity.player.ClientPlayerEntity.livingTick(ClientPlayerEntity.java:812)
+	at net.minecraft.entity.LivingEntity.tick(LivingEntity.java:2187)
+	at net.minecraft.entity.player.PlayerEntity.tick(PlayerEntity.java:235)
+	at net.minecraft.client.entity.player.ClientPlayerEntity.tick(ClientPlayerEntity.java:191)
+	at net.minecraft.client.world.ClientWorld.func_217418_a(ClientWorld.java:168)
+
+-- Entity being ticked --
+Details:
+	Entity Type: minecraft:player (net.minecraft.client.entity.player.ClientPlayerEntity)
+	Entity ID: 238
+	Entity Name: Dev
+	Entity's Exact location: 196.62, 63.94, -124.37
+	Entity's Block location: World: (196,63,-125), Chunk: (at 4,3,3 in 12,-8; contains blocks 192,0,-128 to 207,255,-113), Region: (0,-1; contains chunks 0,-32 to 31,-1, blocks 0,0,-512 to 511,255,-1)
+	Entity's Momentum: 0.21, -0.00, 0.02
+	Entity's Passengers: []
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.world.World.func_217390_a(World.java:734)
+	at net.minecraft.client.world.ClientWorld.tickEntities(ClientWorld.java:136)
+
+-- Affected level --
+Details:
+	All players: 1 total; [ClientPlayerEntity['Dev'/238, l='MpServer', x=196.62, y=63.94, z=-124.37]]
+	Chunk stats: Client Chunk Cache: 729, 480
+	Level dimension: DimensionType{minecraft:overworld}
+	Level name: MpServer
+	Level seed: 0
+	Level generator: ID 00 - default, ver 1. Features enabled: false
+	Level generator options: {}
+	Level spawn location: World: (176,73,-80), Chunk: (at 0,4,0 in 11,-5; contains blocks 176,0,-80 to 191,255,-65), Region: (0,-1; contains chunks 0,-32 to 31,-1, blocks 0,0,-512 to 511,255,-1)
+	Level time: 15990 game time, 6000 day time
+	Level storage version: 0x00000 - Unknown?
+	Level weather: Rain time: 0 (now: false), thunder time: 0 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: false
+	Server brand: forge
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.world.ClientWorld.fillCrashReport(ClientWorld.java:425)
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:1824)
+	at net.minecraft.client.Minecraft.run(Minecraft.java:400)
+	at net.minecraft.client.main.Main.main(Main.java:128)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at net.minecraftforge.userdev.FMLUserdevClientLaunchProvider.lambda$launchService$0(FMLUserdevClientLaunchProvider.java:55)
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:37)
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54)
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:72)
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:81)
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:65)
+	at net.minecraftforge.userdev.LaunchTesting.main(LaunchTesting.java:101)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.14.4
+	Minecraft Version ID: 1.14.4
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_181, Oracle Corporation
+	Java VM Version: Dynamic Code Evolution 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 454997600 bytes (433 MB) / 964468736 bytes (919 MB) up to 3101687808 bytes (2958 MB)
+	CPUs: 8
+	JVM Flags: 1 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump
+	ModLauncher: 4.1.0+62+5bfa59b
+	ModLauncher launch target: fmluserdevclient
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		/eventbus-1.0.0-service.jar eventbus PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar object_holder_definalize PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar runtime_enum_extender PLUGINSERVICE 
+		/accesstransformers-1.0.1-milestone.0.1+94458e7-shadowed.jar accesstransformer PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar capability_inject_definalize PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar runtimedistcleaner PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar fml TRANSFORMATIONSERVICE 
+	FML: 28.1
+	Forge: net.minecraftforge:28.1.90
+	FML Language Providers: 
+		javafml@28.1
+		minecraft@1
+	Mod List: 
+		client-extra.jar Minecraft {minecraft@1.14.4 DONE}
+		forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar Forge {forge@28.1.85 DONE}
+		Bibliotheca-1.14.4-1.4.0_mapped_snapshot_20191020-1.14.3.jar Bibliotheca {bibliotheca@1.4.0 DONE}
+		main Cultivated-Tech {cultivatedtech@NONE DONE}
+		World-Stripper-1.7.2-1.14.4_mapped_snapshot_20191020-1.14.3.jar World Stripper {worldstripper@1.7.2 DONE}
+		Hwyla-1.10.6-B67_1.14.4_mapped_snapshot_20191020-1.14.3.jar Waila {waila@version DONE}
+		jei-1.14.4-6.0.0.25_mapped_snapshot_20191020-1.14.3.jar Just Enough Items {jei@6.0.0.25 DONE}
+	Launched Version: MOD_DEV
+	LWJGL: 3.2.2 build 10
+	OpenGL: GeForce GTX 970/PCIe/SSE2 GL version 4.6.0 NVIDIA 441.08, NVIDIA Corporation
+	GL Caps: Using GL 1.3 multitexturing.
+Using GL 1.3 texture combiners.
+Using framebuffer objects because OpenGL 3.0 is supported and separate blending is supported.
+Shaders are available because OpenGL 2.1 is supported.
+VBOs are available because OpenGL 1.5 is supported.
+
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'forge'
+	Type: Client (map_client.txt)
+	Resource Packs: 
+	Current Language: English (US)
+	CPU: 8x Intel(R) Core(TM) i7-3820 CPU @ 3.60GHz

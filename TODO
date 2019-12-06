@@ -1,0 +1,17 @@
+-- Add --
+    * Add Seeds for all crops
+    * Add drops for all crops
+    * Add Reeds crops
+    * Add more lang file stuff
+
+-- Fix --
+    * (Temp Workaround) Fix crash caused by fire (block updates) for soil
+
+-- Clean --
+    Texture folder
+    Move unused textures out of the mod itself
+    Refactor Rice Name
+
+
+-- Ideas --
+    * Crop that changes based on light levels. Translucent : https://main-designyoutrust.netdna-ssl.com/wp-content/uploads/2017/02/1-23.jpg?iv=102

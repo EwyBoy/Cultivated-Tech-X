@@ -1,0 +1,113 @@
+---- Minecraft Crash Report ----
+// There are four lights!
+
+Time: 02/12/19 15:19
+Description: Ticking player
+
+java.lang.NullPointerException: Ticking player
+	at net.minecraft.util.math.shapes.VoxelShapes.getAllowedOffset(VoxelShapes.java:239) ~[?:?] {re:classloading}
+	at net.minecraft.util.math.shapes.VoxelShapes.getAllowedOffset(VoxelShapes.java:186) ~[?:?] {re:classloading}
+	at net.minecraft.entity.Entity.getAllowedMovement(Entity.java:819) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.Entity.func_223307_a(Entity.java:777) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.Entity.getAllowedMovement(Entity.java:742) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.Entity.move(Entity.java:543) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.LivingEntity.travel(LivingEntity.java:1975) ~[?:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.travel(PlayerEntity.java:1547) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.LivingEntity.livingTick(LivingEntity.java:2373) ~[?:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.livingTick(PlayerEntity.java:520) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.LivingEntity.tick(LivingEntity.java:2187) ~[?:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.tick(PlayerEntity.java:235) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.player.ServerPlayerEntity.playerTick(ServerPlayerEntity.java:381) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.network.play.ServerPlayNetHandler.tick(ServerPlayNetHandler.java:183) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkManager.tick(NetworkManager.java:245) ~[?:?] {re:classloading}
+	at net.minecraft.network.NetworkSystem.tick(NetworkSystem.java:148) ~[?:?] {re:classloading}
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:882) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:800) ~[?:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:118) ~[?:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:646) [?:?] {re:classloading,pl:accesstransformer:B}
+	at java.lang.Thread.run(Thread.java:748) [?:1.8.0_181] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Server thread
+Stacktrace:
+	at net.minecraft.util.math.shapes.VoxelShapes.getAllowedOffset(VoxelShapes.java:239)
+	at net.minecraft.util.math.shapes.VoxelShapes.getAllowedOffset(VoxelShapes.java:186)
+	at net.minecraft.entity.Entity.getAllowedMovement(Entity.java:819)
+	at net.minecraft.entity.Entity.func_223307_a(Entity.java:777)
+	at net.minecraft.entity.Entity.getAllowedMovement(Entity.java:742)
+	at net.minecraft.entity.Entity.move(Entity.java:543)
+	at net.minecraft.entity.LivingEntity.travel(LivingEntity.java:1975)
+	at net.minecraft.entity.player.PlayerEntity.travel(PlayerEntity.java:1547)
+	at net.minecraft.entity.LivingEntity.livingTick(LivingEntity.java:2373)
+	at net.minecraft.entity.player.PlayerEntity.livingTick(PlayerEntity.java:520)
+	at net.minecraft.entity.LivingEntity.tick(LivingEntity.java:2187)
+	at net.minecraft.entity.player.PlayerEntity.tick(PlayerEntity.java:235)
+
+-- Player being ticked --
+Details:
+	Entity Type: minecraft:player (net.minecraft.entity.player.ServerPlayerEntity)
+	Entity ID: 120
+	Entity Name: Dev
+	Entity's Exact location: 271.28, 63.00, -351.69
+	Entity's Block location: World: (271,63,-352), Chunk: (at 15,3,0 in 16,-22; contains blocks 256,0,-352 to 271,255,-337), Region: (0,-1; contains chunks 0,-32 to 31,-1, blocks 0,0,-512 to 511,255,-1)
+	Entity's Momentum: 0.00, -0.08, 0.00
+	Entity's Passengers: []
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.entity.player.ServerPlayerEntity.playerTick(ServerPlayerEntity.java:381)
+	at net.minecraft.network.play.ServerPlayNetHandler.tick(ServerPlayNetHandler.java:183)
+	at net.minecraft.network.NetworkManager.tick(NetworkManager.java:245)
+
+-- Ticking connection --
+Details:
+	Connection: net.minecraft.network.NetworkManager@5d0982d3
+Stacktrace:
+	at net.minecraft.network.NetworkSystem.tick(NetworkSystem.java:148)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:882)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:800)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:118)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:646)
+	at java.lang.Thread.run(Thread.java:748)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.14.4
+	Minecraft Version ID: 1.14.4
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_181, Oracle Corporation
+	Java VM Version: Dynamic Code Evolution 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 816015720 bytes (778 MB) / 1221382144 bytes (1164 MB) up to 3101687808 bytes (2958 MB)
+	CPUs: 8
+	JVM Flags: 1 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump
+	ModLauncher: 4.1.0+62+5bfa59b
+	ModLauncher launch target: fmluserdevclient
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		/eventbus-1.0.0-service.jar eventbus PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar object_holder_definalize PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar runtime_enum_extender PLUGINSERVICE 
+		/accesstransformers-1.0.1-milestone.0.1+94458e7-shadowed.jar accesstransformer PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar capability_inject_definalize PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar runtimedistcleaner PLUGINSERVICE 
+		/forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-launcher.jar fml TRANSFORMATIONSERVICE 
+	FML: 28.1
+	Forge: net.minecraftforge:28.1.90
+	FML Language Providers: 
+		javafml@28.1
+		minecraft@1
+	Mod List: 
+		client-extra.jar Minecraft {minecraft@1.14.4 DONE}
+		forge-1.14.4-28.1.90_mapped_snapshot_20191020-1.14.3-recomp.jar Forge {forge@28.1.85 DONE}
+		Bibliotheca-1.14.4-1.4.0_mapped_snapshot_20191020-1.14.3.jar Bibliotheca {bibliotheca@1.4.0 DONE}
+		main Cultivated-Tech {cultivatedtech@NONE DONE}
+		World-Stripper-1.7.2-1.14.4_mapped_snapshot_20191020-1.14.3.jar World Stripper {worldstripper@1.7.2 DONE}
+		Hwyla-1.10.6-B67_1.14.4_mapped_snapshot_20191020-1.14.3.jar Waila {waila@version DONE}
+		jei-1.14.4-6.0.0.25_mapped_snapshot_20191020-1.14.3.jar Just Enough Items {jei@6.0.0.25 DONE}
+	Player Count: 1 / 8; [ServerPlayerEntity['Dev'/120, l='New World', x=271.28, y=63.00, z=-351.69]]
+	Data Packs: vanilla, mod:bibliotheca, mod:cultivatedtech, mod:forge, mod:jei, mod:waila, mod:worldstripper
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'forge'

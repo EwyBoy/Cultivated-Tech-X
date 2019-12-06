@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "cultivatedtech:block/quicksand",
+    "all": "cultivatedtech:block/quicksand"
+  }
+}

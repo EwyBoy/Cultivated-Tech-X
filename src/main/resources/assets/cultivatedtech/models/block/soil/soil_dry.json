@@ -1,0 +1,8 @@
+{
+    "parent": "block/farmland",
+    "textures": {
+        "particle": "cultivatedtech:block/soil/soil_dry",
+        "dirt":     "cultivatedtech:block/industrial_dirt",
+        "top":      "cultivatedtech:block/soil/soil_dry"
+    }
+}

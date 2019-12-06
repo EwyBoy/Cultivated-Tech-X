@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "cultivatedtech:block/industrialsoil2"
+    },
+    "moisture=1": {
+      "model": "cultivatedtech:block/industrialsoil2"
+    },
+    "moisture=2": {
+      "model": "cultivatedtech:block/industrialsoil2"
+    },
+    "moisture=3": {
+      "model": "cultivatedtech:block/industrialsoil2"
+    },
+    "moisture=4": {
+      "model": "cultivatedtech:block/industrialsoil2"
+    },
+    "moisture=5": {
+      "model": "cultivatedtech:block/industrialsoil2"
+    },
+    "moisture=6": {
+      "model": "cultivatedtech:block/industrialsoil2"
+    },
+    "moisture=7": {
+      "model": "cultivatedtech:block/industrialsoil2"
+    }
+  }
+}
