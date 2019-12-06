@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "cultivatedtech:block/test"
+      "model": "cultivatedtech:block/generator/00"
     }
   }
 }

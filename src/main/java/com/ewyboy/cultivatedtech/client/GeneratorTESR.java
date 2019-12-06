@@ -1,5 +1,6 @@
 package com.ewyboy.cultivatedtech.client;
 
+import com.ewyboy.bibliotheca.client.rendering.FluidRenderer;
 import com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
@@ -21,13 +22,13 @@ public class GeneratorTESR extends TileEntityRenderer<GeneratorTileEntity> {
         if (te != null) {
             GlStateManager.pushMatrix();
                 GlStateManager.enableBlend();
-                    FluidRenderHelper.renderSidedFluidCuboid(fluid, te.getPos(),
+                    FluidRenderer.renderSidedFluidCuboid(fluid, te.getPos(),
                             0.375, 0.0d, 0.15d,
                             0.0d, 0.0625d, 0.0d,
                             0.25, 0.5d, 0.7d,
                             true, true, false, false, false, false
                     );
-                    FluidRenderHelper.renderSidedFluidCuboid(fluid, te.getPos(),
+                    FluidRenderer.renderSidedFluidCuboid(fluid, te.getPos(),
                             0.15d, 0.0d, 0.375,
                             0.0d, 0.0625d, 0.0d,
                             0.7d, 0.5d, 0.25d,

@@ -1,5 +1,6 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
+import com.ewyboy.bibliotheca.client.interfaces.IHasSpecialRenderer;
 import com.ewyboy.bibliotheca.common.content.block.BlockBaseTile;
 import com.ewyboy.cultivatedtech.client.GeneratorTESR;
 import com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity;
@@ -11,7 +12,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraftforge.client.model.animation.TileEntityRendererAnimation;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 
-public class GeneratorBlock extends BlockBaseTile<GeneratorTileEntity> {
+public class GeneratorBlock extends BlockBaseTile<GeneratorTileEntity> implements IHasSpecialRenderer {
 
     @Override
     protected Class<GeneratorTileEntity> getTileClass() {
@@ -22,7 +23,8 @@ public class GeneratorBlock extends BlockBaseTile<GeneratorTileEntity> {
         super(properties);
     }
 
-    public static void initModel() {
+    @Override
+    public void initSpecialRenderer() {
         ClientRegistry.bindTileEntitySpecialRenderer(GeneratorTileEntity.class, new GeneratorTESR());
     }
 
@@ -45,5 +47,6 @@ public class GeneratorBlock extends BlockBaseTile<GeneratorTileEntity> {
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
     }
+
 
 }

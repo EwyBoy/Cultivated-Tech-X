@@ -21,7 +21,6 @@ public class ClientProxy extends CommonProxy {
     @OnlyIn(Dist.CLIENT)
     public void construct() {
         super.construct();
-        GeneratorBlock.initModel();
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.ewyboy.cultivatedtech.util.Reference;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.IUnbakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemGroup;
@@ -69,27 +70,6 @@ public class CultivatedTech {
         PROXY.setup();
     }
 
-    @SubscribeEvent
-    public static void onModelBakeEvent(ModelBakeEvent event) {
-        try {
-            // Try to load an OBJ model (placed in src/main/resources/assets/cultivatedtech/models/)
-            IUnbakedModel model = ModelLoaderRegistry.getModelOrMissing(new ResourceLocation("cultivatedtech:block/generator/generator.obj"));
-
-            if (model instanceof OBJModel) {
-                IBakedModel bakedModel = model.bake(event.getModelLoader(), ModelLoader.defaultTextureGetter(), new BasicState(model.getDefaultState(), false), DefaultVertexFormats.ITEM);
-                event.getModelRegistry().put(new ModelResourceLocation("cultivatedtech:generator", ""), bakedModel);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPreTextureStitch(TextureStitchEvent.Pre event) {
-        event.addSprite(
-                ResourceLocation.tryCreate("cultivatedtech:block/machinebricked")
-        );
-    }
     private void dataGen(final GatherDataEvent event) {
 
         final DataGenerator gen = event.getGenerator();
