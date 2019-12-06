@@ -21,14 +21,12 @@ public class ClientProxy extends CommonProxy {
     @OnlyIn(Dist.CLIENT)
     public void construct() {
         super.construct();
-        OBJLoader.INSTANCE.addDomain(Reference.MOD_INFO.MOD_ID);
         GeneratorBlock.initModel();
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public void setup() {
-        OBJLoader.INSTANCE.addDomain(Reference.MOD_INFO.MOD_ID);
         super.setup();
     }
 }

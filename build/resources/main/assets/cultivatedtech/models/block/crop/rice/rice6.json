@@ -1,0 +1,6 @@
+{
+  "parent": "block/crop",
+  "textures": {
+    "crop": "cultivatedtech:block/crop/hemp/hemp6"
+  }
+}

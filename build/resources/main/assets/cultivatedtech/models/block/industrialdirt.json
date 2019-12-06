@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "cultivatedtech:block/industrial_dirt",
+    "all": "cultivatedtech:block/industrial_dirt"
+  }
+}

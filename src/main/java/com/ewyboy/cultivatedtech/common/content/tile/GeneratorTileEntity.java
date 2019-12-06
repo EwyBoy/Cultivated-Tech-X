@@ -20,6 +20,6 @@ public class GeneratorTileEntity extends TileEntity implements ITickableTileEnti
 
     @Override
     public boolean hasFastRenderer() {
-        return true;
+        return false;
     }
 }

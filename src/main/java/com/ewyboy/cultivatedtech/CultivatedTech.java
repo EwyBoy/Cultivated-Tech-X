@@ -71,7 +71,7 @@ public class CultivatedTech {
 
     @SubscribeEvent
     public static void onModelBakeEvent(ModelBakeEvent event) {
-        try {
+       /* try {
             // Try to load an OBJ model (placed in src/main/resources/assets/cultivatedtech/models/)
             IUnbakedModel model = ModelLoaderRegistry.getModelOrMissing(new ResourceLocation("cultivatedtech:block/generator/generator_1.obj"));
 
@@ -81,7 +81,7 @@ public class CultivatedTech {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @SubscribeEvent

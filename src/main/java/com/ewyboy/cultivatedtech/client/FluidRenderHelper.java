@@ -1,15 +1,15 @@
-package com.ewyboy.bibliotheca.client.rendering;
+package com.ewyboy.cultivatedtech.client;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.renderer.texture.MissingTextureSprite;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumFacing.Axis;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fluids.FluidStack;
@@ -20,7 +20,7 @@ public class FluidRenderHelper {
     private FluidRenderHelper() {}
 
     public static float FLUID_OFFSET = 0.005f;
-    protected static Minecraft mc = Minecraft.getMinecraft();
+    protected static Minecraft mc = Minecraft.getInstance();
 
     /**
      * Renders a fluid block, call from TESR. x/y/z is the rendering offset.
@@ -45,8 +45,8 @@ public class FluidRenderHelper {
 
 
     public static void renderFluidCuboid(FluidStack fluid, BlockPos pos, double x, double y, double z, double x1, double y1, double z1, double x2, double y2, double z2) {
-        int color = fluid.getFluid().getColor(fluid);
-        renderFluidCuboid(fluid, pos, x, y, z, x1, y1, z1, x2, y2, z2, color);
+        int color = fluid.getFluid().getAttributes().getColor();
+        renderFluidCuboid(fluid, pos, x, y, z, x1, y1, z1, x2, y2, z2);
     }
 
     /**
@@ -56,21 +56,25 @@ public class FluidRenderHelper {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder renderer = tessellator.getBuffer();
         renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-        mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+
+        mc.textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
         //RenderUtil.setColorRGBA(color);
-        int brightness = mc.world.getCombinedLight(pos, fluid.getFluid().getLuminosity());
+        int brightness = mc.world.getCombinedLight(pos, fluid.getFluid().getAttributes().getLuminosity());
 
         pre(x, y, z);
 
-        TextureAtlasSprite still = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
-        TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
+        TextureAtlasSprite still = mc.getTextureMap().getSprite(fluid.getFluid().getAttributes().getStill(fluid));
+        TextureAtlasSprite flowing = mc.getTextureMap().getSprite(fluid.getFluid().getAttributes().getFlowing(fluid));
 
-        putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.UP, color, brightness, false);
-        putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.NORTH, color, brightness, true);
-        putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.SOUTH, color, brightness, true);
-        putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.EAST, color, brightness, true);
-        putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.WEST, color, brightness, true);
-        putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.DOWN, color, brightness, false);
+
+        //TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getAttributes().getFlowing(fluid).toString());
+
+        putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.UP, color, brightness, false);
+        putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.NORTH, color, brightness, true);
+        putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.SOUTH, color, brightness, true);
+        putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.EAST, color, brightness, true);
+        putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.WEST, color, brightness, true);
+        putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.DOWN, color, brightness, false);
 
         // x/y/z2 - x/y/z1 is because we need the width/height/depth
 
@@ -105,7 +109,7 @@ public class FluidRenderHelper {
     }
 
     public static void renderSidedFluidCuboid(FluidStack fluid, BlockPos pos, double x, double y, double z, double x1, double y1, double z1, double x2, double y2, double z2, boolean sideNorth, boolean sideSouth, boolean sideEast, boolean sideWest, boolean sideUp, boolean sideDown) {
-        int color = fluid.getFluid().getColor(fluid);
+        int color = fluid.getFluid().getAttributes().getColor(fluid);
         renderSidedFluidCuboid(fluid, pos, x, y, z, x1, y1, z1, x2, y2, z2, color, sideNorth, sideSouth, sideEast, sideWest, sideUp, sideDown);
     }
 
@@ -116,27 +120,28 @@ public class FluidRenderHelper {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder renderer = tessellator.getBuffer();
         renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-        mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        int brightness = mc.world.getCombinedLight(pos, fluid.getFluid().getLuminosity());
+        mc.textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+        int brightness = mc.world.getCombinedLight(pos, fluid.getFluid().getAttributes().getLuminosity());
 
         pre(x, y, z);
 
-        TextureAtlasSprite still = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
-        TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
+        TextureAtlasSprite still = mc.getTextureMap().getSprite(fluid.getFluid().getAttributes().getStill(fluid));
+        TextureAtlasSprite flowing = mc.getTextureMap().getSprite(fluid.getFluid().getAttributes().getFlowing(fluid));
 
         if (sideNorth) {
-            putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.NORTH, color, brightness, true);
+            putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.NORTH, color, brightness, true);
         } if (sideSouth) {
-            putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.SOUTH, color, brightness, true);
+            putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.SOUTH, color, brightness, true);
         } if (sideEast) {
-            putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.EAST, color, brightness, true);
+            putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.EAST, color, brightness, true);
         } if (sideWest) {
-            putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.WEST, color, brightness, true);
+            putTexturedQuad(renderer, flowing, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.WEST, color, brightness, true);
         } if (sideUp) {
-            putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.UP, color, brightness, false);
+            putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.UP, color, brightness, false);
         } if (sideDown) {
-            putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.DOWN, color, brightness, false);
+            putTexturedQuad(renderer, still, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.DOWN, color, brightness, false);
         }
+
         tessellator.draw();
         post();
     }
@@ -152,21 +157,21 @@ public class FluidRenderHelper {
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder renderer = tessellator.getBuffer();
         renderer.begin(GL11.GL_QUADS, DefaultVertexFormats.BLOCK);
-        mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        int color = fluid.getFluid().getColor(fluid);
-        int brightness = mc.world.getCombinedLight(pos, fluid.getFluid().getLuminosity());
+        mc.textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+        int color = fluid.getFluid().getAttributes().getColor(fluid);
+        int brightness = mc.world.getCombinedLight(pos, fluid.getFluid().getAttributes().getLuminosity());
 
         pre(px, py, pz);
-        GlStateManager.translate(from.getX(), from.getY(), from.getZ());
+        GlStateManager.translated(from.getX(), from.getY(), from.getZ());
 
-        TextureAtlasSprite still = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getStill(fluid).toString());
-        TextureAtlasSprite flowing = mc.getTextureMapBlocks().getTextureExtry(fluid.getFluid().getFlowing(fluid).toString());
+        TextureAtlasSprite still = mc.getTextureMap().getSprite(fluid.getFluid().getAttributes().getStill(fluid));
+        TextureAtlasSprite flowing = mc.getTextureMap().getSprite(fluid.getFluid().getAttributes().getFlowing(fluid));
 
         if (still == null) {
-            still = mc.getTextureMapBlocks().getMissingSprite();
+            still = MissingTextureSprite.func_217790_a();
         }
         if (flowing == null) {
-            flowing = mc.getTextureMapBlocks().getMissingSprite();
+            flowing = MissingTextureSprite.func_217790_a();
         }
 
         int xd = to.getX() - from.getX();
@@ -220,27 +225,27 @@ public class FluidRenderHelper {
                     double z2 = zs[z + 1] - z1;
 
                     if (x == 0)
-                        putTexturedQuad(renderer, flowing, x1, y1, z1, x2, y2, z2, EnumFacing.WEST, color, brightness, true);
+                        putTexturedQuad(renderer, flowing, x1, y1, z1, x2, y2, z2, Direction.WEST, color, brightness, true);
                     if (x == xd)
-                        putTexturedQuad(renderer, flowing, x1, y1, z1, x2, y2, z2, EnumFacing.EAST, color, brightness, true);
+                        putTexturedQuad(renderer, flowing, x1, y1, z1, x2, y2, z2, Direction.EAST, color, brightness, true);
                     if (y == 0)
-                        putTexturedQuad(renderer, still, x1, y1, z1, x2, y2, z2, EnumFacing.DOWN, color, brightness, false);
+                        putTexturedQuad(renderer, still, x1, y1, z1, x2, y2, z2, Direction.DOWN, color, brightness, false);
                     if (y == yd)
-                        putTexturedQuad(renderer, still, x1, y1, z1, x2, y2, z2, EnumFacing.UP, color, brightness, false);
+                        putTexturedQuad(renderer, still, x1, y1, z1, x2, y2, z2, Direction.UP, color, brightness, false);
                     if (z == 0)
-                        putTexturedQuad(renderer, flowing, x1, y1, z1, x2, y2, z2, EnumFacing.NORTH, color, brightness, true);
+                        putTexturedQuad(renderer, flowing, x1, y1, z1, x2, y2, z2, Direction.NORTH, color, brightness, true);
                     if (z == zd)
-                        putTexturedQuad(renderer, flowing, x1, y1, z1, x2, y2, z2, EnumFacing.SOUTH, color, brightness, true);
+                        putTexturedQuad(renderer, flowing, x1, y1, z1, x2, y2, z2, Direction.SOUTH, color, brightness, true);
                 }
             }
         }
 
-        //putTexturedQuad(renderer, still,   x1, y1, z1, x2-x1, y2-y1, z2-z1, EnumFacing.DOWN, color, brightness);
-        //putTexturedQuad(renderer, flowing, x1, y1, z1, x2-x1, y2-y1, z2-z1, EnumFacing.NORTH, color, brightness);
-        //putTexturedQuad(renderer, flowing, x1, y1, z1, x2-x1, y2-y1, z2-z1, EnumFacing.EAST, color, brightness);
-        //putTexturedQuad(renderer, flowing, x1, y1, z1, x2-x1, y2-y1, z2-z1, EnumFacing.SOUTH, color, brightness);
-        //putTexturedQuad(renderer, flowing, x1, y1, z1, x2-x1, y2-y1, z2-z1, EnumFacing.WEST, color, brightness);
-        //putTexturedQuad(renderer, still  , x1, y1, z1, x2-x1, y2-y1, z2-z1, EnumFacing.UP, color, brightness);
+        //putTexturedQuad(renderer, still,   x1, y1, z1, x2-x1, y2-y1, z2-z1, Direction.DOWN, color, brightness);
+        //putTexturedQuad(renderer, flowing, x1, y1, z1, x2-x1, y2-y1, z2-z1, Direction.NORTH, color, brightness);
+        //putTexturedQuad(renderer, flowing, x1, y1, z1, x2-x1, y2-y1, z2-z1, Direction.EAST, color, brightness);
+        //putTexturedQuad(renderer, flowing, x1, y1, z1, x2-x1, y2-y1, z2-z1, Direction.SOUTH, color, brightness);
+        //putTexturedQuad(renderer, flowing, x1, y1, z1, x2-x1, y2-y1, z2-z1, Direction.WEST, color, brightness);
+        //putTexturedQuad(renderer, still  , x1, y1, z1, x2-x1, y2-y1, z2-z1, Direction.UP, color, brightness);
 
         tessellator.draw();
 
@@ -249,16 +254,17 @@ public class FluidRenderHelper {
 
     public static void putTexturedCuboid(BufferBuilder renderer, ResourceLocation location, double x1, double y1, double z1, double x2, double y2, double z2, int color, int brightness) {
         boolean flowing = false;
-        TextureAtlasSprite sprite = mc.getTextureMapBlocks().getTextureExtry(location.toString());
-        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.DOWN, color, brightness, flowing);
-        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.NORTH, color, brightness, flowing);
-        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.EAST, color, brightness, flowing);
-        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.SOUTH, color, brightness, flowing);
-        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.WEST, color, brightness, flowing);
-        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, EnumFacing.UP, color, brightness, flowing);
+        TextureAtlasSprite sprite = mc.getTextureMap().getSprite(location);
+
+        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.DOWN, color, brightness, flowing);
+        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.NORTH, color, brightness, flowing);
+        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.EAST, color, brightness, flowing);
+        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.SOUTH, color, brightness, flowing);
+        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.WEST, color, brightness, flowing);
+        putTexturedQuad(renderer, sprite, x1, y1, z1, x2 - x1, y2 - y1, z2 - z1, Direction.UP, color, brightness, flowing);
     }
 
-    public static void putTexturedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int color, int brightness, boolean flowing) {
+    public static void putTexturedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, Direction face, int color, int brightness, boolean flowing) {
         int l1 = brightness >> 0x10 & 0xFFFF;
         int l2 = brightness & 0xFFFF;
 
@@ -271,7 +277,7 @@ public class FluidRenderHelper {
     }
 
     // x and x+w has to be within [0,1], same for y/h and z/d
-    public static void putTexturedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, EnumFacing face, int r, int g, int b, int a, int light1, int light2, boolean flowing) {
+    public static void putTexturedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double h, double d, Direction face, int r, int g, int b, int a, int light1, int light2, boolean flowing) {
         // safety
         if (sprite == null) {
             return;
@@ -382,7 +388,7 @@ public class FluidRenderHelper {
     /**
      * Similar to putTexturedQuad, except its only for upwards quads and a rotation is specified
      */
-    public static void putRotatedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double d, EnumFacing rotation, int color, int brightness, boolean flowing) {
+    public static void putRotatedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double d, Direction rotation, int color, int brightness, boolean flowing) {
         int l1 = brightness >> 0x10 & 0xFFFF;
         int l2 = brightness & 0xFFFF;
 
@@ -397,7 +403,7 @@ public class FluidRenderHelper {
     /**
      * Similar to putTexturedQuad, except its only for upwards quads and a rotation is specified
      */
-    public static void putRotatedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double d, EnumFacing rotation, int r, int g, int b, int a, int light1, int light2, boolean flowing) {
+    public static void putRotatedQuad(BufferBuilder renderer, TextureAtlasSprite sprite, double x, double y, double z, double w, double d, Direction rotation, int r, int g, int b, int a, int light1, int light2, boolean flowing) {
         // safety
         if (sprite == null) {
             return;
@@ -421,7 +427,7 @@ public class FluidRenderHelper {
         double zt2 = zt1 + d;
 
         // when rotating by 90 or 270 the dimensions switch, so switch the U and V before hand
-        if (rotation.getAxis() == Axis.X) {
+        if (rotation.getAxis() == Direction.Axis.X) {
             double temp = xt1;
             xt1 = zt1;
             zt1 = temp;
@@ -432,7 +438,7 @@ public class FluidRenderHelper {
 
         // we want to start from the bottom for north or west textures as otherwise UV is backwards
         // we also want to start from the bottom for flowing fluids, and both should cancel
-        if (flowing ^ (rotation == EnumFacing.NORTH || rotation == EnumFacing.WEST)) {
+        if (flowing ^ (rotation == Direction.NORTH || rotation == Direction.WEST)) {
             double tmp = 1d - zt1;
             zt1 = 1d - zt2;
             zt2 = tmp;
@@ -467,7 +473,7 @@ public class FluidRenderHelper {
                 renderer.pos(x1, y, z2).color(r, g, b, a).tex(maxU, maxV).lightmap(light1, light2).endVertex();
                 renderer.pos(x2, y, z2).color(r, g, b, a).tex(maxU, minV).lightmap(light1, light2).endVertex();
                 renderer.pos(x2, y, z1).color(r, g, b, a).tex(minU, minV).lightmap(light1, light2).endVertex();
-                break;
+            break;
         }
     }
 
@@ -484,7 +490,7 @@ public class FluidRenderHelper {
             GL11.glShadeModel(GL11.GL_FLAT);
         }
 
-        GlStateManager.translate(x, y, z);
+        GlStateManager.translated(x, y, z);
     }
 
     public static void post() {
@@ -499,11 +505,12 @@ public class FluidRenderHelper {
 
     public static void setColorRGBA(int color) {
         float a = alpha(color) / 255.0F;
+
         float r = red(color) / 255.0F;
         float g = green(color) / 255.0F;
         float b = blue(color) / 255.0F;
 
-        GlStateManager.color(r, g, b, a);
+        GlStateManager.color4f(r, g, b, a);
     }
 
     public static void setBrightness(BufferBuilder renderer, int brightness) {

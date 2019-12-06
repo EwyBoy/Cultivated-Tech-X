@@ -1,0 +1,6 @@
+{
+  "parent": "block/crop",
+  "textures": {
+    "crop": "cultivatedtech:block/crop/rice/rice7_bottom"
+  }
+}
