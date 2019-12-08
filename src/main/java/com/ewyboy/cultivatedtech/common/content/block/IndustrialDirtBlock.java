@@ -1,6 +1,6 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
-import com.ewyboy.bibliotheca.common.content.block.BlockBase;
+import com.ewyboy.bibliotheca.common.content.block.BaseBlock;
 import com.ewyboy.cultivatedtech.common.register.Register;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
-public class IndustrialDirtBlock extends BlockBase {
+public class IndustrialDirtBlock extends BaseBlock {
 
     public IndustrialDirtBlock(Properties properties) {
         super(properties);

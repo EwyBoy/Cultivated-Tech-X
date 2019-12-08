@@ -1,6 +1,6 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
-import com.ewyboy.bibliotheca.common.content.block.BlockBaseTile;
+import com.ewyboy.bibliotheca.common.content.block.TileBaseBlock;
 import com.ewyboy.bibliotheca.common.helpers.TextHelper;
 import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaInfo;
 import com.ewyboy.cultivatedtech.common.content.tile.EcoflamerTileEntity;
@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -24,14 +25,21 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class EcoflamerBlock extends BlockBaseTile<EcoflamerTileEntity> implements IWailaInfo {
+public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implements IWailaInfo {
 
     @Override
     protected Class<EcoflamerTileEntity> getTileClass() {
         return EcoflamerTileEntity.class;
+    }
+
+    @Nullable
+    @Override
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        return super.createTileEntity(state, world);
     }
 
     public EcoflamerBlock(Properties properties) {

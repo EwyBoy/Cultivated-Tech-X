@@ -17,8 +17,6 @@ public class GeneratorTESR extends TileEntityRenderer<GeneratorTileEntity> {
     FluidStack fluid = new FluidStack(Fluids.FLOWING_LAVA, 1000);
 
     private void renderFluid(GeneratorTileEntity te) {
-        System.out.println(te);
-
         if (te != null) {
             GlStateManager.pushMatrix();
                 GlStateManager.enableBlend();

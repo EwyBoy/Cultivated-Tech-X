@@ -1,6 +1,5 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
-import com.ewyboy.bibliotheca.common.content.block.BlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;

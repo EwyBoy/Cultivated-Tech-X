@@ -1,6 +1,5 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop.base;
 
-import com.ewyboy.bibliotheca.util.ModLogger;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
