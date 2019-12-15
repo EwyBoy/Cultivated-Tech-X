@@ -1,13 +1,13 @@
 {
   "itemGroup.cultivatedtech": "Cultivated Tech",
-  "block.cultivatedtech.ecoflamer": "Ecoflamer",
-  "block.cultivatedtech.adaptivesoil": "Adaptive Soil",
-  "block.cultivatedtech.industrialdirt": "Industrial Dirt",
-  "block.cultivatedtech.industrialsoil1": "Industrial Soil",
-  "block.cultivatedtech.industrialsoil2": "Industrial Soil",
-  "block.cultivatedtech.sugarcane": "Industrial Sugarcane",
-  "block.cultivatedtech.rice": "Industrial Rice",
-  "block.cultivatedtech.hemp": "Industrial Hemp",
-  "block.cultivatedtech.scorch": "Scorch",
-  "block.cultivatedtech.hellroot": "Hell Roots"
+  "item.cultivatedtech.ecoflamer": "Ecoflamer",
+  "item.cultivatedtech.adaptivesoil": "Adaptive Soil",
+  "item.cultivatedtech.industrialdirt": "Industrial Dirt",
+  "item.cultivatedtech.industrialsoil1": "Industrial Soil",
+  "item.cultivatedtech.industrialsoil2": "Industrial Soil",
+  "item.cultivatedtech.sugarcane": "Industrial Sugarcane",
+  "item.cultivatedtech.rice": "Industrial Rice",
+  "item.cultivatedtech.hemp": "Industrial Hemp",
+  "item.cultivatedtech.scorch": "Scorch",
+  "item.cultivatedtech.hellroot": "Hell Roots"
 }

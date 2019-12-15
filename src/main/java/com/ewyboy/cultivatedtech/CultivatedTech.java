@@ -1,44 +1,23 @@
 package com.ewyboy.cultivatedtech;
 
+import com.ewyboy.bibliotheca.common.event.EventHandler;
 import com.ewyboy.bibliotheca.proxy.IModProxy;
-import com.ewyboy.bibliotheca.util.ModLogger;
 import com.ewyboy.cultivatedtech.common.generators.DataGenerators;
 import com.ewyboy.cultivatedtech.common.register.Register;
 import com.ewyboy.cultivatedtech.proxy.ClientProxy;
 import com.ewyboy.cultivatedtech.proxy.CommonProxy;
 import com.ewyboy.cultivatedtech.util.Reference;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.IUnbakedModel;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.model.BasicState;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
-import net.minecraftforge.client.model.obj.OBJLoader;
-import net.minecraftforge.client.model.obj.OBJModel;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.model.TRSRTransformation;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-
-import java.util.Objects;
 
 import static com.ewyboy.cultivatedtech.util.Reference.MOD_INFO;
 
@@ -60,9 +39,10 @@ public class CultivatedTech {
     };
 
     public CultivatedTech() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this :: setup);
         MinecraftForge.EVENT_BUS.register(this);
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this :: dataGen);
+        EventHandler.MOD.register(this :: setup);
+        EventHandler.MOD.register(this :: dataGen);
+
         PROXY.construct();
     }
 

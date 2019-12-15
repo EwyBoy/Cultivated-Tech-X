@@ -1,15 +1,16 @@
 package com.ewyboy.cultivatedtech.client;
 
 import com.ewyboy.bibliotheca.client.rendering.FluidRenderer;
+import com.ewyboy.bibliotheca.common.helpers.MathHelper;
 import com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity;
 import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraftforge.fluids.FluidStack;
 
 public class GeneratorTESR extends TileEntityRenderer<GeneratorTileEntity> {
@@ -37,15 +38,27 @@ public class GeneratorTESR extends TileEntityRenderer<GeneratorTileEntity> {
         }
     }
 
+    private double ticker = 0;
+
     private void renderItem(GeneratorTileEntity te) {
         if (te != null) {
+            double tick = 0;
+
+            if (ticker < 2160) {
+                 tick = MathHelper.getCyclingNumberInRange((int) ticker, 1080);
+            } else {
+                ticker = 0;
+            }
+
+            ticker++;
+
             RenderHelper.enableStandardItemLighting();
                 GlStateManager.enableLighting();
                     GlStateManager.pushMatrix();
-                        GlStateManager.translated(.5, 1.25, .5);
+                        GlStateManager.translated(.5, 1.65, .5);
                         GlStateManager.scaled(0.75f, 0.8f, 0.75f);
-                        GlStateManager.rotated(-135,0,0,1);
-                        Minecraft.getInstance().getItemRenderer().renderItem(new ItemStack(Items.DIAMOND_SWORD), ItemCameraTransforms.TransformType.NONE);
+                        GlStateManager.rotated(tick,1,0,0);
+                        Minecraft.getInstance().getItemRenderer().renderItem(new ItemStack(Blocks.ENDER_CHEST), ItemCameraTransforms.TransformType.NONE);
                     GlStateManager.popMatrix();
                 GlStateManager.disableLighting();
             RenderHelper.disableStandardItemLighting();

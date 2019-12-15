@@ -24,6 +24,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -63,15 +66,6 @@ public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implement
         builder.add(BlockStateProperties.ENABLED);
     }
 
-    @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (player.getHeldItem(hand).isEmpty()) {
-            EcoflamerTileEntity ecoflamerTileEntity = getTileEntity(worldIn, pos);
-            player.sendMessage(new StringTextComponent(ecoflamerTileEntity.getEnergyStored() + " / " + ecoflamerTileEntity.getMaxEnergyStored() + " : Energy"));
-        }
-        return true;
-    }
-
     @OnlyIn(Dist.CLIENT)
     public void animateTick(BlockState state, World world, BlockPos pos, Random random) {
         double x = (double)pos.getX() + 0.5D;
@@ -88,8 +82,12 @@ public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implement
     @Override
     public void getWailaBody(List<ITextComponent> list, IDataAccessor iDataAccessor, IPluginConfig iPluginConfig) {
         EcoflamerTileEntity te = getTileEntity(iDataAccessor.getWorld(), iDataAccessor.getPosition());
-        if (te != null) {
-            list.add(new StringTextComponent(TextHelper.formatCapacityInfo(te.getEnergyStored(), te.getMaxEnergyStored(), "RF")));
-        }
+
+        LazyOptional<IEnergyStorage> energy = te.getCapability(CapabilityEnergy.ENERGY);
+
+        int stored = energy.map(IEnergyStorage::getEnergyStored).orElse(0);
+        int max = energy.map(IEnergyStorage::getMaxEnergyStored).orElse(0);
+
+        list.add(new StringTextComponent(TextHelper.formatCapacityInfo(stored, max, "RF")));
     }
 }

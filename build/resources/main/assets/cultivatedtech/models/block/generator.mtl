@@ -1,7 +1,0 @@
-newmtl 0
-map_Kd machinebricked0.png 
-newmtl 1
-map_Kd itemframe_background.png 
-newmtl 2
-map_Kd glass.png 
-newmtl none

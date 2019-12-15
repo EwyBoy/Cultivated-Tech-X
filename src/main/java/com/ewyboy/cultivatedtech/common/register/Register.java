@@ -1,7 +1,9 @@
 package com.ewyboy.cultivatedtech.common.register;
 
+import com.ewyboy.cultivatedtech.CultivatedTech;
 import com.ewyboy.cultivatedtech.common.content.block.*;
 import com.ewyboy.cultivatedtech.common.content.block.crop.*;
+import com.ewyboy.cultivatedtech.common.content.item.HarvesterItem;
 import com.ewyboy.cultivatedtech.common.content.item.SeedItem;
 import com.ewyboy.cultivatedtech.common.content.tile.EcoflamerTileEntity;
 import com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity;
@@ -18,27 +20,30 @@ import net.minecraft.tileentity.TileEntityType;
 public class Register {
 
     public static final class BLOCK {
-        public static final EcoflamerBlock ecoflamer = new EcoflamerBlock(Block.Properties.create(Material.ANVIL));
-        public static final GeneratorBlock generator = new GeneratorBlock(Block.Properties.create(Material.ANVIL));
-        public static final IndustrialDirtBlock industrialDirt = new IndustrialDirtBlock(Block.Properties.create(Material.EARTH));
-        public static final AdaptiveSoilBlock adaptiveSoil = new AdaptiveSoilBlock(Block.Properties.create(Material.EARTH));
-        public static final IndustrialSoilBlock industrialSoil1 = new IndustrialSoilBlock(Block.Properties.create(Material.EARTH), 1);
-        public static final IndustrialSoilBlock industrialSoil2 = new IndustrialSoilBlock(Block.Properties.create(Material.EARTH), 2);
-        public static final QuicksandBlock quicksand = new QuicksandBlock(Block.Properties.create(Material.SAND));
-        public static final HempBlock hemp = new HempBlock(Block.Properties.create(Material.PLANTS));
-        public static final SugarcaneBlock sugarcane = new SugarcaneBlock(Block.Properties.create(Material.PLANTS));
-        public static final RiceBlock rice = new RiceBlock(Block.Properties.create(Material.PLANTS));
-        public static final ScorchBlock scorch = new ScorchBlock(Block.Properties.create(Material.PLANTS));
-        public static final ThermobiumBlock thermobium = new ThermobiumBlock(Block.Properties.create(Material.PLANTS));
-        public static final HellRootBlock hellroot = new HellRootBlock(Block.Properties.create(Material.PLANTS));
+        public static final EcoflamerBlock ecoflamer = new EcoflamerBlock(EcoflamerBlock.Properties.create(Material.ANVIL));
+        public static final GeneratorBlock generator = new GeneratorBlock(GeneratorBlock.Properties.create(Material.ANVIL));
+        public static final IndustrialDirtBlock industrialDirt = new IndustrialDirtBlock(IndustrialDirtBlock.Properties.create(Material.EARTH));
+        public static final AdaptiveSoilBlock adaptiveSoil = new AdaptiveSoilBlock(AdaptiveSoilBlock.Properties.create(Material.EARTH));
+        public static final IndustrialSoilBlock industrialSoil1 = new IndustrialSoilBlock(IndustrialSoilBlock.Properties.create(Material.EARTH), 1);
+        public static final IndustrialSoilBlock industrialSoil2 = new IndustrialSoilBlock(IndustrialSoilBlock.Properties.create(Material.EARTH), 2);
+        public static final QuicksandBlock quicksand = new QuicksandBlock(QuicksandBlock.Properties.create(Material.SAND));
+        public static final HempBlock hemp = new HempBlock(HempBlock.Properties.create(Material.PLANTS));
+        public static final SugarcaneBlock sugarcane = new SugarcaneBlock(SugarcaneBlock.Properties.create(Material.PLANTS));
+        public static final RiceBlock rice = new RiceBlock(RiceBlock.Properties.create(Material.PLANTS));
+        public static final ScorchBlock scorch = new ScorchBlock(ScorchBlock.Properties.create(Material.PLANTS));
+        public static final ThermobiumBlock thermobium = new ThermobiumBlock(ThermobiumBlock.Properties.create(Material.PLANTS));
+        public static final HellRootBlock hellroot = new HellRootBlock(HellRootBlock.Properties.create(Material.PLANTS));
+        public static final BaleBlock hempBale = new BaleBlock(BaleBlock.Properties.create(Material.LEAVES));
+        public static final BaleBlock sugarcaneBale = new BaleBlock(BaleBlock.Properties.create(Material.BAMBOO));
     }
 
     public static final class ITEM {
-        public static final SeedItem hempSeed = new SeedItem(BLOCK.hemp, new Item.Properties());
-        public static final SeedItem sugarcaneSeed = new SeedItem(BLOCK.hemp, new Item.Properties());
-        public static final SeedItem riceSeed = new SeedItem(BLOCK.hemp, new Item.Properties());
-        public static final SeedItem scorchSeed = new SeedItem(BLOCK.hemp, new Item.Properties());
-        public static final SeedItem thermobiumSeed = new SeedItem(BLOCK.hemp, new Item.Properties());
+        public static final SeedItem hempSeed = new SeedItem(BLOCK.hemp, new SeedItem.Properties());
+        public static final SeedItem sugarcaneSeed = new SeedItem(BLOCK.sugarcane, new SeedItem.Properties());
+        public static final SeedItem riceSeed = new SeedItem(BLOCK.rice, new SeedItem.Properties());
+        public static final SeedItem scorchSeed = new SeedItem(BLOCK.scorch, new SeedItem.Properties());
+        public static final SeedItem thermobiumSeed = new SeedItem(BLOCK.thermobium, new SeedItem.Properties());
+        public static final HarvesterItem harvester = new HarvesterItem(new Item.Properties().group(CultivatedTech.itemGroup));
         //public static final ItemScorch scorch = new ItemScorch(new Item.Properties().group(CultivatedTech.itemGroup));
     }
 

@@ -1,11 +1,15 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop.base;
 
+import com.ewyboy.bibliotheca.util.ModLogger;
+import com.ewyboy.cultivatedtech.common.content.item.HarvesterItem;
+import com.ewyboy.cultivatedtech.common.register.Register;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -16,8 +20,14 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.PlantType;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.ItemHandlerHelper;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public class TallCropBlock extends CropBlock {
@@ -53,17 +63,37 @@ public class TallCropBlock extends CropBlock {
         }
     }
 
+    private static boolean hasHarvestingTool = false;
+
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (state.get(AGE) == 7) {
-            breakBlock(worldIn, pos);
+
+            hasHarvestingTool = true;
+
+            List<List<ItemStack>> lootList = breakBlock(worldIn, pos, true);
+
+            ModLogger.info(lootList.toString());
+
+            for (List<ItemStack> itemStacks : lootList) {
+                ModLogger.info(lootList.toString());
+                for (ItemStack itemStack : itemStacks) {
+                    ModLogger.info(itemStacks.toString());
+                    ItemHandlerHelper.giveItemToPlayer(player, itemStack);
+                }
+            }
+
+            // Replant
+
             int minY = pos.getY() - 4;
             for (; pos.getY() >= minY && !(worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock); pos = pos.down());
             if (worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock)  {
                 worldIn.setBlockState(pos.up(), state.with(AGE, 0));
             }
+
             return true;
         }
+
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
 
@@ -74,15 +104,28 @@ public class TallCropBlock extends CropBlock {
         return pos;
     }
 
-    public void breakBlock(World world, BlockPos pos) {
-        BlockPos groundPos = findGroundPos(world, pos);
-        if (groundPos != null) {
-            for (int y = groundPos.getY(); y < groundPos.getY() + 5; y++) {
-                if(world.getBlockState(new BlockPos(pos.getX(), y, pos.getZ())).getBlock() == this) {
-                    world.destroyBlock(new BlockPos(pos.getX(), y, pos.getZ()), true);
+    public List<List<ItemStack>> breakBlock(World world, BlockPos pos, boolean harvestWithoutTool) {
+
+        List<List<ItemStack>> lootList =  new LinkedList<>();
+
+        if (!world.isRemote) {
+            BlockPos groundPos = findGroundPos(world, pos);
+            if (groundPos != null) {
+                for (int y = groundPos.getY() + 5; y > groundPos.getY(); y--) {
+                    BlockPos targetPos = new BlockPos(pos.getX(), y, pos.getZ());
+                    ModLogger.info(targetPos.toString());
+
+                    if (!isAir(world.getBlockState(targetPos))) {
+                        if(world.getBlockState(targetPos).getBlock() == this) {
+                            lootList.add(getDrops(world.getBlockState(targetPos), (ServerWorld) world, targetPos, null));
+                            world.destroyBlock(targetPos, false);
+                        }
+                    }
                 }
             }
         }
+
+        return lootList;
     }
 
     @Override
