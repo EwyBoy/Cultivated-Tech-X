@@ -12,11 +12,14 @@
       <w>blockscorch</w>
       <w>blocksoil</w>
       <w>blocksugarcane</w>
+      <w>colorizer</w>
       <w>cropcross</w>
       <w>cultivatedtech</w>
       <w>ecoflamer</w>
       <w>eivin</w>
       <w>hellroot</w>
+      <w>hempbale</w>
+      <w>hempseed</w>
       <w>industrialdirt</w>
       <w>industrialsoil</w>
       <w>itemframe</w>
@@ -26,8 +29,12 @@
       <w>newmtl</w>
       <w>redstone</w>
       <w>reobf</w>
+      <w>scorchseed</w>
       <w>spawner</w>
+      <w>sugarcanebale</w>
+      <w>sugarcaneseed</w>
       <w>thermobium</w>
+      <w>thermobiumseed</w>
       <w>thermocore</w>
       <w>waila</w>
     </words>

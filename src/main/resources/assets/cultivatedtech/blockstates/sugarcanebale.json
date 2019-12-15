@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "cultivatedtech:block/sugarcanebale" },
+    "axis=z": { "model": "cultivatedtech:block/sugarcanebale", "x": 90 },
+    "axis=x": { "model": "cultivatedtech:block/sugarcanebale", "x": 90, "y": 90 }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "cultivatedtech:block/hempbale",
+    "all": "cultivatedtech:block/hempbale"
+  }
+}

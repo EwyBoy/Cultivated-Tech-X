@@ -49,7 +49,7 @@ public class ThermobiumBlock extends CropBlock {
             if (worldIn.getBlockState(pos.down()).getBlock() instanceof FarmlandBlock) {
                 if (!worldIn.isRemote) {
                     Random random = new Random();
-                    if (random.nextInt(12) == 0) {
+                    if (random.nextInt(32) == 0) {
                         worldIn.createExplosion(player, pos.getX(), pos.getY(), pos.getZ(), 3.0f, false, Explosion.Mode.NONE);
                         if (player.getPosition().withinDistance(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), 2)) {
                             player.attackEntityFrom(DamageSource.causePlayerDamage(player), 2.0f);

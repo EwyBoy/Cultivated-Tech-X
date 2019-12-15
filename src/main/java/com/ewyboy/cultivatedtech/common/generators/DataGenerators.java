@@ -1,5 +1,6 @@
  package com.ewyboy.cultivatedtech.common.generators;;
 
+ import com.ewyboy.bibliotheca.common.loaders.BlockLoader;
  import com.ewyboy.bibliotheca.common.loaders.ContentLoader;
  import com.ewyboy.cultivatedtech.common.register.Register;
  import com.google.common.collect.ImmutableList;
@@ -174,10 +175,6 @@ public class DataGenerators {
                 registerDropSelfLootTable(block.get());
             }
 
-            @Override
-            protected Iterable<Block> getKnownBlocks() {
-                return ContentLoader.BLOCKS.getContentMap().values();
-            }
         }
     }
 

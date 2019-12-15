@@ -57,7 +57,7 @@ public class RiceBlock extends TallCropBlock implements ILiquidContainer {
     @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (state.get(AGE) == 7) {
-            breakBlock(worldIn, pos);
+            breakBlock(worldIn, pos, false);
             int minY = pos.getY() - 4;
             for (; pos.getY() >= minY && !(worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock); pos = pos.down());
             if (worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock)  {
