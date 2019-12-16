@@ -11,8 +11,7 @@ public class ContentColorizer {
     private static ItemColors itemColors = Minecraft.getInstance().getItemColors();
 
     public static void colorBlocks() {
-        blockColors.register(Register.BLOCK.hemp, Register.BLOCK.hemp);
-        itemColors.register(Register.BLOCK.hemp, Register.BLOCK.hemp.asItem());
+
     }
 
 }

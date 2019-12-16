@@ -2,13 +2,17 @@ package com.ewyboy.cultivatedtech.common.content.block;
 
 import com.ewyboy.bibliotheca.common.content.block.TileBaseBlock;
 import com.ewyboy.bibliotheca.common.helpers.TextHelper;
+import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaCamouflage;
 import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaInfo;
 import com.ewyboy.cultivatedtech.common.content.tile.EcoflamerTileEntity;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -32,7 +36,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implements IWailaInfo {
+public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implements IWailaInfo, IWailaCamouflage {
 
     @Override
     protected Class<EcoflamerTileEntity> getTileClass() {
@@ -80,6 +84,11 @@ public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implement
     }
 
     @Override
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(new StringTextComponent("Produces power by consuming nearby vegetation and grass"));
+    }
+
+    @Override
     public void getWailaBody(List<ITextComponent> list, IDataAccessor iDataAccessor, IPluginConfig iPluginConfig) {
         EcoflamerTileEntity te = getTileEntity(iDataAccessor.getWorld(), iDataAccessor.getPosition());
 
@@ -89,5 +98,10 @@ public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implement
         int max = energy.map(IEnergyStorage::getMaxEnergyStored).orElse(0);
 
         list.add(new StringTextComponent(TextHelper.formatCapacityInfo(stored, max, "RF")));
+    }
+
+    @Override
+    public ItemStack decorateBlock(IDataAccessor iDataAccessor, IPluginConfig iPluginConfig) {
+        return new ItemStack(Items.ANVIL);
     }
 }

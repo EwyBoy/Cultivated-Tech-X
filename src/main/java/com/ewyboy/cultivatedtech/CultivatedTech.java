@@ -42,12 +42,11 @@ public class CultivatedTech {
         MinecraftForge.EVENT_BUS.register(this);
         EventHandler.MOD.register(this :: setup);
         EventHandler.MOD.register(this :: dataGen);
-
         PROXY.construct();
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        PROXY.setup();
+        PROXY.setup(event);
     }
 
     private void dataGen(final GatherDataEvent event) {

@@ -7,6 +7,7 @@ import com.ewyboy.cultivatedtech.common.events.EventHandlers;
 import com.ewyboy.cultivatedtech.common.register.Register;
 import com.ewyboy.cultivatedtech.util.Reference;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 public class CommonProxy implements IModProxy {
 
@@ -28,7 +29,8 @@ public class CommonProxy implements IModProxy {
     }
 
     @Override
-    public void setup() {
+    public void setup(FMLCommonSetupEvent fmlCommonSetupEvent) {
 
     }
+
 }
