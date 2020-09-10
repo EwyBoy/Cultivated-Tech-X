@@ -1,8 +1,6 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop.base;
 
 import com.ewyboy.bibliotheca.util.ModLogger;
-import com.ewyboy.cultivatedtech.common.content.item.HarvesterItem;
-import com.ewyboy.cultivatedtech.common.register.Register;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
@@ -13,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -22,12 +21,10 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.PlantType;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 public class TallCropBlock extends CropBlock {
@@ -48,7 +45,7 @@ public class TallCropBlock extends CropBlock {
     }
 
     @Override
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
         int currentState = state.get(AGE);
 
         if (worldIn.getBlockState(pos.down()).getBlock() == this || isValidGround(state, worldIn, pos)) {
@@ -66,12 +63,12 @@ public class TallCropBlock extends CropBlock {
     private static boolean hasHarvestingTool = false;
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (state.get(AGE) == 7) {
 
             hasHarvestingTool = true;
 
-            List<List<ItemStack>> lootList = breakBlock(worldIn, pos, true);
+            List<List<ItemStack>> lootList = breakBlock(worldIn, pos);
 
             ModLogger.info(lootList.toString());
 
@@ -91,7 +88,7 @@ public class TallCropBlock extends CropBlock {
                 worldIn.setBlockState(pos.up(), state.with(AGE, 0));
             }
 
-            return true;
+            return ActionResultType.SUCCESS;
         }
 
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
@@ -104,7 +101,7 @@ public class TallCropBlock extends CropBlock {
         return pos;
     }
 
-    public List<List<ItemStack>> breakBlock(World world, BlockPos pos, boolean harvestWithoutTool) {
+    public List<List<ItemStack>> breakBlock(World world, BlockPos pos) {
 
         List<List<ItemStack>> lootList =  new LinkedList<>();
 
@@ -114,8 +111,7 @@ public class TallCropBlock extends CropBlock {
                 for (int y = groundPos.getY() + 5; y > groundPos.getY(); y--) {
                     BlockPos targetPos = new BlockPos(pos.getX(), y, pos.getZ());
                     ModLogger.info(targetPos.toString());
-
-                    if (!isAir(world.getBlockState(targetPos))) {
+                    if (!isAir(world.getBlockState(targetPos), world, targetPos)) {
                         if(world.getBlockState(targetPos).getBlock() == this) {
                             lootList.add(getDrops(world.getBlockState(targetPos), (ServerWorld) world, targetPos, null));
                             world.destroyBlock(targetPos, false);
@@ -155,7 +151,7 @@ public class TallCropBlock extends CropBlock {
 
     @Override
     public PlantType getPlantType(IBlockReader world, BlockPos pos) {
-        return PlantType.Nether;
+        return PlantType.NETHER;
     }
 
     @Override

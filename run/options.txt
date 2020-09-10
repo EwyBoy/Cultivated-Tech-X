@@ -1,4 +1,4 @@
-version:1976
+version:2578
 autoJump:false
 autoSuggestions:true
 chatColors:true
@@ -16,15 +16,20 @@ showSubtitles:false
 touchscreen:false
 fullscreen:false
 bobView:true
+toggleCrouch:false
+toggleSprint:false
 mouseSensitivity:0.5
 fov:0.0
+screenEffectScale:1.0
+fovEffectScale:1.0
 gamma:0.0
 renderDistance:12
+entityDistanceScaling:1.0
 guiScale:3
 particles:0
 maxFps:120
 difficulty:2
-fancyGraphics:true
+graphicsMode:1
 ao:2
 biomeBlendRadius:2
 renderClouds:true
@@ -34,6 +39,7 @@ lastServer:
 lang:en_us
 chatVisibility:0
 chatOpacity:1.0
+chatLineSpacing:0.0
 textBackgroundOpacity:0.5
 backgroundForChatOnly:true
 hideServerAddress:false
@@ -43,6 +49,7 @@ overrideWidth:0
 overrideHeight:0
 heldItemTooltips:true
 chatHeightFocused:1.0
+chatDelay: 0.0
 chatHeightUnfocused:0.44366195797920227
 chatScale:1.0
 chatWidth:1.0
@@ -55,6 +62,8 @@ tutorialStep:none
 mouseWheelSensitivity:1.0
 rawMouseInput:true
 glDebugVerbosity:1
+skipMultiplayerWarning:false
+syncChunkWrites:true
 key_key.attack:key.mouse.left
 key_key.use:key.mouse.right
 key_key.forward:key.keyboard.w
@@ -75,7 +84,7 @@ key_key.togglePerspective:key.keyboard.f5
 key_key.smoothCamera:key.keyboard.unknown
 key_key.fullscreen:key.keyboard.f11
 key_key.spectatorOutlines:key.keyboard.unknown
-key_key.swapHands:key.keyboard.f
+key_key.swapOffhand:key.keyboard.f
 key_key.saveToolbarActivator:key.keyboard.c
 key_key.loadToolbarActivator:key.keyboard.x
 key_key.advancements:key.keyboard.l
@@ -88,22 +97,9 @@ key_key.hotbar.6:key.keyboard.6
 key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
 key_key.hotbar.9:key.keyboard.9
-key_Strip World:key.keyboard.delete
-key_Dress World:key.keyboard.insert
 key_key.waila.config:key.keyboard.keypad.0
 key_key.waila.show_overlay:key.keyboard.keypad.1
 key_key.waila.toggle_liquid:key.keyboard.keypad.2
-key_key.jei.toggleOverlay:key.keyboard.o:CONTROL
-key_key.jei.focusSearch:key.keyboard.f:CONTROL
-key_key.jei.toggleCheatMode:key.keyboard.unknown
-key_key.jei.toggleEditMode:key.keyboard.unknown
-key_key.jei.showRecipe:key.keyboard.r
-key_key.jei.showUses:key.keyboard.u
-key_key.jei.recipeBack:key.keyboard.backspace
-key_key.jei.previousPage:key.keyboard.page.up
-key_key.jei.nextPage:key.keyboard.page.down
-key_key.jei.bookmark:key.keyboard.a
-key_key.jei.toggleBookmarkOverlay:key.keyboard.unknown
 soundCategory_master:0.13741721
 soundCategory_music:0.0
 soundCategory_record:1.0

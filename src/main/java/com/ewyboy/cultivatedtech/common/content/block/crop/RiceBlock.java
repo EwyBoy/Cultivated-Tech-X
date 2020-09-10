@@ -4,23 +4,22 @@ import com.ewyboy.cultivatedtech.common.content.block.crop.base.TallCropBlock;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
-import net.minecraft.entity.passive.fish.TropicalFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
@@ -35,7 +34,7 @@ public class RiceBlock extends TallCropBlock implements ILiquidContainer {
     }
 
     @Override
-    public void tick(BlockState state, World world, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int currentState = state.get(AGE);
         int prob = !world.getBlockState(pos).get(BOOSTED) ? 4 : 8;
 
@@ -55,15 +54,15 @@ public class RiceBlock extends TallCropBlock implements ILiquidContainer {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (state.get(AGE) == 7) {
-            breakBlock(worldIn, pos, false);
+            breakBlock(worldIn, pos);
             int minY = pos.getY() - 4;
             for (; pos.getY() >= minY && !(worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock); pos = pos.down());
             if (worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock)  {
                 worldIn.setBlockState(pos.up(), state.with(AGE, 0).with(IS_BOTTOM, true).with(BOOSTED, false));
             }
-            return true;
+            return ActionResultType.SUCCESS;
         }
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
     }
@@ -98,7 +97,7 @@ public class RiceBlock extends TallCropBlock implements ILiquidContainer {
     }
 
     @Override
-    public IFluidState getFluidState(BlockState state) {
+    public FluidState getFluidState(BlockState state) {
         if (state.get(IS_BOTTOM)) {
             return Fluids.WATER.getStillFluidState(false);
         } else {
@@ -113,7 +112,7 @@ public class RiceBlock extends TallCropBlock implements ILiquidContainer {
     }
 
     @Override
-    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, IFluidState fluidStateIn) {
+    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
         return false;
     }
 

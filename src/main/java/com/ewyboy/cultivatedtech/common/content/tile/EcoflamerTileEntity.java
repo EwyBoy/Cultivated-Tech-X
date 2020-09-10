@@ -7,6 +7,7 @@ import com.ewyboy.bibliotheca.util.LazyOptionalHelper;
 import com.ewyboy.bibliotheca.util.ModLogger;
 import com.ewyboy.cultivatedtech.common.register.Register;
 import com.google.common.collect.ImmutableSet;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.nbt.CompoundNBT;
@@ -90,7 +91,7 @@ public class EcoflamerTileEntity extends TileEntity implements ITickableTileEnti
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
-        this.read(packet.getNbtCompound());
+        this.read(getBlockState(), packet.getNbtCompound());
     }
 
     @Override
@@ -106,9 +107,9 @@ public class EcoflamerTileEntity extends TileEntity implements ITickableTileEnti
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        storage.load(compound);
-        super.read(compound);
+    public void read(BlockState state, CompoundNBT nbt) {
+        storage.load(nbt);
+        super.read(state, nbt);
     }
 
     private LazyOptional<IEnergyStorage> getEnergyOptional() {

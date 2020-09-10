@@ -8,8 +8,8 @@ import com.ewyboy.cultivatedtech.common.content.item.SeedItem;
 import com.ewyboy.cultivatedtech.common.content.tile.EcoflamerTileEntity;
 import com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity;
 import com.ewyboy.cultivatedtech.common.content.tile.PlantTileEntity;
+import com.ewyboy.cultivatedtech.common.content.tile.SoilTileEntity;
 import com.google.common.collect.Sets;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
@@ -50,7 +50,8 @@ public class Register {
     public static final class TILE {
         public static final TileEntityType<EcoflamerTileEntity> ecoflamer = new TileEntityType<>(EcoflamerTileEntity :: new, Sets.newHashSet(BLOCK.ecoflamer), null);
         public static final TileEntityType<GeneratorTileEntity> generator = new TileEntityType<>(GeneratorTileEntity :: new, Sets.newHashSet(BLOCK.generator), null);
-        public static final TileEntityType<PlantTileEntity> plant = new TileEntityType<>(PlantTileEntity :: new, Sets.newHashSet(BLOCK.generator), null);
+        public static final TileEntityType<PlantTileEntity> plant = new TileEntityType<>(PlantTileEntity :: new, Sets.newHashSet(BLOCK.rice), null);
+        public static final TileEntityType<SoilTileEntity> soil = new TileEntityType<>(SoilTileEntity :: new, Sets.newHashSet(BLOCK.industrialSoil1), null);
     }
 
     public static final class FOOD {

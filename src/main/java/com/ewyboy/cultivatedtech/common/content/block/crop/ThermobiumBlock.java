@@ -1,28 +1,27 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop;
 
-import com.ewyboy.bibliotheca.util.ModLogger;
 import com.ewyboy.cultivatedtech.common.content.block.crop.base.CropBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.client.multiplayer.PlayerController;
-import net.minecraft.entity.player.PlayerAbilities;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
@@ -44,14 +43,14 @@ public class ThermobiumBlock extends CropBlock {
     }
 
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         if (state.get(AGE_0_12) == 12) {
             if (worldIn.getBlockState(pos.down()).getBlock() instanceof FarmlandBlock) {
                 if (!worldIn.isRemote) {
                     Random random = new Random();
                     if (random.nextInt(32) == 0) {
                         worldIn.createExplosion(player, pos.getX(), pos.getY(), pos.getZ(), 3.0f, false, Explosion.Mode.NONE);
-                        if (player.getPosition().withinDistance(new Vec3d(pos.getX(), pos.getY(), pos.getZ()), 2)) {
+                        if (player.getPosition().withinDistance(new Vector3d(pos.getX(), pos.getY(), pos.getZ()), 2)) {
                             player.attackEntityFrom(DamageSource.causePlayerDamage(player), 2.0f);
                         }
                         worldIn.destroyBlock(pos, false);
@@ -61,7 +60,7 @@ public class ThermobiumBlock extends CropBlock {
                         worldIn.setBlockState(pos, state.with(AGE_0_12, 5));
                     }
                 }
-                return true;
+                return ActionResultType.SUCCESS;
             }
         }
         return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
@@ -73,11 +72,11 @@ public class ThermobiumBlock extends CropBlock {
     }
 
     @Override
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int currentState = state.get(AGE_0_12);
-        if (canGrow(worldIn, pos, state, false)) {
+        if (canGrow(world, pos, state, false)) {
             if (random.nextInt(12) == 0) {
-                worldIn.setBlockState(pos, this.getDefaultState().with(AGE_0_12, currentState + 1));
+                world.setBlockState(pos, this.getDefaultState().with(AGE_0_12, currentState + 1));
             }
         }
     }

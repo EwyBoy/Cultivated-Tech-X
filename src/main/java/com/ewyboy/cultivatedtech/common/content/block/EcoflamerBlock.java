@@ -1,6 +1,6 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
-import com.ewyboy.bibliotheca.common.content.block.TileBaseBlock;
+import com.ewyboy.bibliotheca.common.content.block.BaseTileBlock;
 import com.ewyboy.bibliotheca.common.helpers.TextHelper;
 import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaCamouflage;
 import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaInfo;
@@ -17,10 +17,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -36,7 +33,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implements IWailaInfo, IWailaCamouflage {
+public class EcoflamerBlock extends BaseTileBlock<EcoflamerTileEntity> implements IWailaInfo, IWailaCamouflage {
 
     @Override
     protected Class<EcoflamerTileEntity> getTileClass() {
@@ -60,11 +57,6 @@ public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implement
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
-
-    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
         builder.add(BlockStateProperties.ENABLED);
@@ -84,7 +76,7 @@ public class EcoflamerBlock extends TileBaseBlock<EcoflamerTileEntity> implement
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flag) {
         tooltip.add(new StringTextComponent("Produces power by consuming nearby vegetation and grass"));
     }
 

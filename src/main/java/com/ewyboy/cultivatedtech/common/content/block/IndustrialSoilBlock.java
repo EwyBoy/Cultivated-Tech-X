@@ -20,6 +20,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
     }
 
     @Override
-    public void tick(BlockState state, World world, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int currentState = state.get(MOISTURE);
         Material moisturizer;
 
@@ -63,18 +64,13 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.TRANSLUCENT;
-    }
-
-    @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
         if (player.getHeldItem(hand).getItem() == Items.NETHER_WART && type == 2) {
             world.setBlockState(pos.up(), Blocks.NETHER_WART.getDefaultState());
             // TODO - Swing arm
             // TODO - Randomize sound pitch / volume
             world.playSound(player, pos.up(), SoundEvents.BLOCK_LILY_PAD_PLACE, SoundCategory.PLAYERS, 1.0f, 1.0f);
-            return true;
+            return ActionResultType.SUCCESS;
         }
         return super.onBlockActivated(state, world, pos, player, hand, hit);
     }

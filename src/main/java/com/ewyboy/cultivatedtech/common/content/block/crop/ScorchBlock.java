@@ -33,7 +33,7 @@ public class ScorchBlock extends SmallCropBlock {
 
     @Override
     public PlantType getPlantType(IBlockReader world, BlockPos pos) {
-        return PlantType.Nether;
+        return PlantType.NETHER;
     }
 
 }

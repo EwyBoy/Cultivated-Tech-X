@@ -1,5 +1,7 @@
 package com.ewyboy.cultivatedtech.common.content.tile;
 
+import com.ewyboy.cultivatedtech.common.register.Register;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -13,8 +15,8 @@ public class SoilTileEntity extends TileEntity {
     private int fertile;
     private int growth;
 
-    public SoilTileEntity(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+    public SoilTileEntity() {
+        super(Register.TILE.soil);
     }
 
     public int getFertile() {
@@ -48,7 +50,7 @@ public class SoilTileEntity extends TileEntity {
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(pkt.getNbtCompound());
+        read(getBlockState(), pkt.getNbtCompound());
     }
 
     @Override
@@ -60,9 +62,9 @@ public class SoilTileEntity extends TileEntity {
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
-        fertile = compound.getInt("fertile");
-        growth = compound.getInt("growth");
+    public void read(BlockState state, CompoundNBT nbt) {
+        super.read(state, nbt);
+        fertile = nbt.getInt("fertile");
+        growth = nbt.getInt("growth");
     }
 }

@@ -17,9 +17,5 @@ public class GeneratorTileEntity extends TileEntity implements ITickableTileEnti
 
     @Override
     public void tick() {}
-
-    @Override
-    public boolean hasFastRenderer() {
-        return false;
-    }
+    
 }

@@ -3,7 +3,6 @@ package com.ewyboy.cultivatedtech.common.content.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -19,6 +18,7 @@ public class HellRootBlock extends BushBlock {
     public HellRootBlock(Properties properties) {
         super(properties);
         properties.doesNotBlockMovement();
+        properties.notSolid();
     }
 
     @Override
@@ -26,15 +26,11 @@ public class HellRootBlock extends BushBlock {
         return SHAPE;
     }
 
-    @Override
-    public boolean isSolid(BlockState state) {
-        return false;
-    }
-
+    /*
     @Override
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.CUTOUT;
-    }
+    }*/
 
     @Override
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
@@ -53,6 +49,6 @@ public class HellRootBlock extends BushBlock {
 
     @Override
     public PlantType getPlantType(IBlockReader world, BlockPos pos) {
-        return PlantType.Nether;
+        return PlantType.NETHER;
     }
 }

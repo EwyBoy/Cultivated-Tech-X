@@ -3,12 +3,15 @@ package com.ewyboy.cultivatedtech.client;
 import com.ewyboy.bibliotheca.client.rendering.FluidRenderer;
 import com.ewyboy.bibliotheca.common.helpers.MathHelper;
 import com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
@@ -16,6 +19,10 @@ import net.minecraftforge.fluids.FluidStack;
 public class GeneratorTESR extends TileEntityRenderer<GeneratorTileEntity> {
 
     FluidStack fluid = new FluidStack(Fluids.FLOWING_LAVA, 1000);
+
+    public GeneratorTESR(TileEntityRendererDispatcher rendererDispatcherIn) {
+        super(rendererDispatcherIn);
+    }
 
     private void renderFluid(GeneratorTileEntity te) {
         if (te != null) {
@@ -57,8 +64,8 @@ public class GeneratorTESR extends TileEntityRenderer<GeneratorTileEntity> {
                     GlStateManager.pushMatrix();
                         GlStateManager.translated(.5, 1.65, .5);
                         GlStateManager.scaled(0.75f, 0.8f, 0.75f);
-                        GlStateManager.rotated(tick,1,0,0);
-                        Minecraft.getInstance().getItemRenderer().renderItem(new ItemStack(Blocks.ENDER_CHEST), ItemCameraTransforms.TransformType.NONE);
+                        //GlStateManager.rotated(tick,1,0,0);
+                        //Minecraft.getInstance().getItemRenderer().renderItem(new ItemStack(Blocks.ENDER_CHEST), ItemCameraTransforms.TransformType.NONE);
                     GlStateManager.popMatrix();
                 GlStateManager.disableLighting();
             RenderHelper.disableStandardItemLighting();
@@ -66,16 +73,16 @@ public class GeneratorTESR extends TileEntityRenderer<GeneratorTileEntity> {
     }
 
     @Override
-    public void render(GeneratorTileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void render(GeneratorTileEntity te, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         GlStateManager.pushLightingAttributes();
-            GlStateManager.pushMatrix();
-                GlStateManager.translated(x, y, z);
-                    GlStateManager.disableRescaleNormal();
-                        renderFluid(te);
-                        renderItem(te);
-                    GlStateManager.enableRescaleNormal();
-                GlStateManager.translated(0, 0, 0);
-            GlStateManager.popMatrix();
+        GlStateManager.pushMatrix();
+        //GlStateManager.translated(x, y, z);
+        GlStateManager.disableRescaleNormal();
+        renderFluid(te);
+        renderItem(te);
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.translated(0, 0, 0);
+        GlStateManager.popMatrix();
         GlStateManager.popAttributes();
     }
 }

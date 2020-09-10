@@ -1,12 +1,15 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop.base;
 
-import net.minecraft.block.*;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BushBlock;
+import net.minecraft.block.IGrowable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
@@ -20,21 +23,12 @@ public class CropBlock extends BushBlock implements IPlantable, IGrowable {
         super(properties);
         properties.tickRandomly();
         properties.doesNotBlockMovement();
-    }
-
-    @Override
-    public boolean isSolid(BlockState state) {
-        return false;
+        properties.notSolid();
     }
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return ZERO_BOX;
-    }
-
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
     }
 
     @Override
@@ -48,7 +42,7 @@ public class CropBlock extends BushBlock implements IPlantable, IGrowable {
     }
 
     @Override
-    public void grow(World world, Random random, BlockPos pos, BlockState state) {
+    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
         this.tick(state, world, pos, random);
     }
 
@@ -59,7 +53,7 @@ public class CropBlock extends BushBlock implements IPlantable, IGrowable {
 
     @Override
     public PlantType getPlantType(IBlockReader world, BlockPos pos) {
-        return PlantType.Crop;
+        return PlantType.CROP;
     }
 
 }

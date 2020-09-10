@@ -1,6 +1,5 @@
 package com.ewyboy.cultivatedtech.client;
 
-import com.ewyboy.cultivatedtech.common.register.Register;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
