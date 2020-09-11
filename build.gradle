@@ -30,14 +30,17 @@ minecraft {
             ideaModule "${project.name}.main"
 
             mods {
+                bibliotheca {
+                    source project(":Bibliotheca").sourceSets.main
+                }
+                quickharvest {
+                    source project(":Quick-Harvest").sourceSets.main
+                }
+                worldstripper {
+                    source project(":World-Stripper").sourceSets.main
+                }
                 cultivatedtech {
                     source sourceSets.main
-                }
-                testmod {
-                    source sourceSets.test
-                }
-                Bibliotheca {
-                    source project(":Bibliotheca").sourceSets.main
                 }
             }
         }
@@ -47,11 +50,18 @@ minecraft {
             ideaModule "${project.name}.main"
 
             mods {
+
+                bibliotheca {
+                    source project(":Bibliotheca").sourceSets.main
+                }
+                quickharvest {
+                    source project(":Quick-Harvest").sourceSets.main
+                }
+                worldstripper {
+                    source project(":World-Stripper").sourceSets.main
+                }
                 cultivatedtech {
                     source sourceSets.main
-                }
-                testmod {
-                    source sourceSets.test
                 }
             }
         }
@@ -62,11 +72,17 @@ minecraft {
             ideaModule "${project.name}.main"
 
             mods {
+                bibliotheca {
+                    source project(":Bibliotheca").sourceSets.main
+                }
+                quickharvest {
+                    source project(":Quick-Harvest").sourceSets.main
+                }
+                worldstripper {
+                    source project(":World-Stripper").sourceSets.main
+                }
                 cultivatedtech {
                     source sourceSets.main
-                }
-                testmod {
-                    source sourceSets.test
                 }
             }
         }
@@ -86,6 +102,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:${MC_VERSION}-${FORGE_VERSION}"
 
     compile project(':Bibliotheca')
+    compile project(':Quick-Harvest')
+    compile project(':World-Stripper')
 
     compileOnly fg.deobf("mcp.mobius.waila:Hwyla:${HWYLA_VERSION}:api")
     runtimeOnly fg.deobf("mcp.mobius.waila:Hwyla:${HWYLA_VERSION}")
