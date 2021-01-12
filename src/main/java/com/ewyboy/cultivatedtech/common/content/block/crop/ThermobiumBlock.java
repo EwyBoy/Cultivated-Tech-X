@@ -1,6 +1,8 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop;
 
-import com.ewyboy.cultivatedtech.common.content.block.crop.base.CropBlock;
+import com.ewyboy.bibliotheca.common.helpers.MathHelper;
+import com.ewyboy.bibliotheca.common.loaders.ContentLoader;
+import com.ewyboy.cultivatedtech.common.content.block.crop.base.BushyBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
@@ -25,7 +27,7 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class ThermobiumBlock extends CropBlock {
+public class ThermobiumBlock extends BushyBlock implements ContentLoader.IHasNoBlockItem {
 
     public static final IntegerProperty AGE_0_12 = IntegerProperty.create("age", 0, 12);
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
@@ -47,11 +49,10 @@ public class ThermobiumBlock extends CropBlock {
         if (state.get(AGE_0_12) == 12) {
             if (worldIn.getBlockState(pos.down()).getBlock() instanceof FarmlandBlock) {
                 if (!worldIn.isRemote) {
-                    Random random = new Random();
-                    if (random.nextInt(4) == 0) {
+                    if (MathHelper.roll(50)) {
                         worldIn.createExplosion(player, pos.getX(), pos.getY(), pos.getZ(), 3.0f, false, Explosion.Mode.NONE);
                         if (player.getPosition().withinDistance(new Vector3d(pos.getX(), pos.getY(), pos.getZ()), 2)) {
-                            player.attackEntityFrom(DamageSource.causeExplosionDamage(player), 4.0f);
+                            player.attackEntityFrom(DamageSource.causeExplosionDamage(new Explosion(worldIn, null, pos.getX(), pos.getY(), pos.getZ(), 4.0f, false, Explosion.Mode.NONE)), 4.0f);
                         }
                         worldIn.destroyBlock(pos, false);
                         worldIn.setBlockState(pos, state.with(AGE_0_12, 0));

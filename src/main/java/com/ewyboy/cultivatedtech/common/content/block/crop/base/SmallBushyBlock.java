@@ -4,8 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -22,12 +20,12 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class SmallCropBlock extends CropBlock {
+public class SmallBushyBlock extends BushyBlock {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_2;
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
-    public SmallCropBlock(Properties properties) {
+    public SmallBushyBlock(Properties properties) {
         super(properties);
         properties.hardnessAndResistance(0.3f);
         properties.sound(SoundType.PLANT);

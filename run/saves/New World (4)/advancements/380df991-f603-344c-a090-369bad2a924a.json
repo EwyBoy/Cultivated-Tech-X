@@ -1,7 +1,8 @@
 {
   "minecraft:adventure/adventuring_time": {
     "criteria": {
-      "minecraft:forest": "2021-01-12 21:06:31 +0100"
+      "minecraft:forest": "2021-01-12 21:06:31 +0100",
+      "minecraft:swamp": "2021-01-12 21:06:59 +0100"
     },
     "done": false
   },

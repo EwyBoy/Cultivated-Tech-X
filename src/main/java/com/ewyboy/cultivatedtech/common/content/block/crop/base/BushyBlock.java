@@ -6,6 +6,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -17,20 +20,15 @@ import net.minecraftforge.common.PlantType;
 
 import java.util.Random;
 
-public class CropBlock extends BushBlock implements IPlantable, IGrowable, IHasRenderType {
+public class BushyBlock extends BushBlock implements IPlantable, IGrowable, IHasRenderType {
 
     protected static final VoxelShape ZERO_BOX = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 0.0D, 0.0D, 0.0D);
 
-    public CropBlock(Properties properties) {
+    public BushyBlock(Properties properties) {
         super(properties);
         properties.tickRandomly();
         properties.doesNotBlockMovement();
         properties.notSolid();
-    }
-
-    @Override
-    public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        return ZERO_BOX;
     }
 
     @Override

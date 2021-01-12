@@ -1,28 +1,4 @@
 {
-  "minecraft:recipes/misc/charcoal": {
-    "criteria": {
-      "has_log": "2020-09-11 16:20:56 +0200"
-    },
-    "done": true
-  },
-  "minecraft:recipes/building_blocks/red_nether_bricks": {
-    "criteria": {
-      "has_nether_wart": "2020-09-11 16:30:01 +0200"
-    },
-    "done": true
-  },
-  "minecraft:recipes/food/bread": {
-    "criteria": {
-      "has_wheat": "2020-09-11 16:29:35 +0200"
-    },
-    "done": true
-  },
-  "minecraft:story/lava_bucket": {
-    "criteria": {
-      "lava_bucket": "2020-09-11 16:16:34 +0200"
-    },
-    "done": true
-  },
   "minecraft:recipes/building_blocks/oak_planks": {
     "criteria": {
       "has_logs": "2020-09-11 16:20:56 +0200"
@@ -41,23 +17,35 @@
     },
     "done": true
   },
-  "minecraft:recipes/decorations/chest": {
+  "minecraft:recipes/transportation/carrot_on_a_stick": {
     "criteria": {
-      "has_lots_of_items": "2020-09-11 16:40:17 +0200"
+      "has_carrot": "2021-01-11 15:50:54 +0100"
     },
     "done": true
   },
-  "minecraft:recipes/transportation/birch_boat": {
+  "minecraft:adventure/kill_a_mob": {
     "criteria": {
-      "in_water": "2020-09-11 16:19:31 +0200"
+      "minecraft:slime": "2020-09-11 16:54:21 +0200"
     },
     "done": true
   },
-  "minecraft:recipes/transportation/acacia_boat": {
+  "minecraft:recipes/building_blocks/smooth_stone_slab": {
     "criteria": {
-      "in_water": "2020-09-11 16:19:31 +0200"
+      "has_smooth_stone": "2021-01-11 16:07:42 +0100"
     },
     "done": true
+  },
+  "minecraft:recipes/decorations/flower_pot": {
+    "criteria": {
+      "has_brick": "2021-01-12 13:20:05 +0100"
+    },
+    "done": true
+  },
+  "minecraft:adventure/kill_all_mobs": {
+    "criteria": {
+      "minecraft:slime": "2020-09-11 16:54:21 +0200"
+    },
+    "done": false
   },
   "minecraft:recipes/building_blocks/stripped_oak_wood": {
     "criteria": {
@@ -65,9 +53,15 @@
     },
     "done": true
   },
-  "minecraft:recipes/transportation/oak_boat": {
+  "minecraft:husbandry/tactical_fishing": {
     "criteria": {
-      "in_water": "2020-09-11 16:19:31 +0200"
+      "salmon_bucket": "2021-01-11 17:57:34 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/sticky_piston": {
+    "criteria": {
+      "has_slime_ball": "2020-09-11 16:54:44 +0200"
     },
     "done": true
   },
@@ -77,21 +71,111 @@
     },
     "done": true
   },
+  "minecraft:recipes/tools/lead": {
+    "criteria": {
+      "has_slime_ball": "2020-09-11 16:54:44 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/brewing/cauldron": {
+    "criteria": {
+      "has_water_bucket": "2020-09-11 16:16:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:plains": "2020-09-11 16:15:08 +0200"
+    },
+    "done": false
+  },
+  "minecraft:recipes/misc/charcoal": {
+    "criteria": {
+      "has_log": "2020-09-11 16:20:56 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/red_nether_bricks": {
+    "criteria": {
+      "has_nether_wart": "2020-09-11 16:30:01 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/bricks": {
+    "criteria": {
+      "has_brick": "2021-01-12 13:20:05 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/food/bread": {
+    "criteria": {
+      "has_wheat": "2020-09-11 16:29:35 +0200"
+    },
+    "done": true
+  },
+  "minecraft:story/lava_bucket": {
+    "criteria": {
+      "lava_bucket": "2020-09-11 16:16:34 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/slime_block": {
+    "criteria": {
+      "has_slime_ball": "2020-09-11 16:54:44 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/blast_furnace": {
+    "criteria": {
+      "has_smooth_stone": "2021-01-11 16:07:42 +0100"
+    },
+    "done": true
+  },
+  "minecraft:husbandry/root": {
+    "criteria": {
+      "consumed_item": "2021-01-11 19:32:01 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/birch_boat": {
+    "criteria": {
+      "in_water": "2020-09-11 16:19:31 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/chest": {
+    "criteria": {
+      "has_lots_of_items": "2020-09-11 16:40:17 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/acacia_boat": {
+    "criteria": {
+      "in_water": "2020-09-11 16:19:31 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/oak_boat": {
+    "criteria": {
+      "in_water": "2020-09-11 16:19:31 +0200"
+    },
+    "done": true
+  },
   "minecraft:recipes/misc/nether_brick": {
     "criteria": {
       "has_netherrack": "2020-09-11 16:32:07 +0200"
     },
     "done": true
   },
-  "minecraft:adventure/root": {
-    "criteria": {
-      "killed_by_something": "2020-09-11 16:44:40 +0200"
-    },
-    "done": true
-  },
   "minecraft:husbandry/plant_seed": {
     "criteria": {
       "wheat": "2020-09-11 16:28:01 +0200"
+    },
+    "done": true
+  },
+  "minecraft:adventure/root": {
+    "criteria": {
+      "killed_by_something": "2020-09-11 16:44:40 +0200"
     },
     "done": true
   },
@@ -107,23 +191,17 @@
     },
     "done": true
   },
-  "minecraft:recipes/brewing/cauldron": {
-    "criteria": {
-      "has_water_bucket": "2020-09-11 16:16:30 +0200"
-    },
-    "done": true
-  },
   "minecraft:recipes/building_blocks/hay_block": {
     "criteria": {
       "has_wheat": "2020-09-11 16:29:35 +0200"
     },
     "done": true
   },
-  "minecraft:adventure/adventuring_time": {
+  "minecraft:recipes/building_blocks/smooth_stone_slab_from_smooth_stone_stonecutting": {
     "criteria": {
-      "minecraft:plains": "2020-09-11 16:15:08 +0200"
+      "has_smooth_stone": "2021-01-11 16:07:42 +0100"
     },
-    "done": false
+    "done": true
   },
-  "DataVersion": 2580
+  "DataVersion": 2584
 }

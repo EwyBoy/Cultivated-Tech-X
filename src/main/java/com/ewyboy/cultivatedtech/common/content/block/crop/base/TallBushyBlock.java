@@ -27,12 +27,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class TallCropBlock extends CropBlock {
+public class TallBushyBlock extends BushyBlock {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
     protected static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
-    public TallCropBlock(Properties properties) {
+    public TallBushyBlock(Properties properties) {
         super(properties);
         properties.hardnessAndResistance(0.3f);
         properties.sound(SoundType.PLANT);
@@ -43,6 +43,8 @@ public class TallCropBlock extends CropBlock {
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE;
     }
+
+
 
     @Override
     public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
