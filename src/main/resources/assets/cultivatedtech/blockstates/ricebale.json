@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "cultivatedtech:block/ricebale" },
+    "axis=z": { "model": "cultivatedtech:block/ricebale", "x": 90 },
+    "axis=x": { "model": "cultivatedtech:block/ricebale", "x": 90, "y": 90 }
+  }
+}

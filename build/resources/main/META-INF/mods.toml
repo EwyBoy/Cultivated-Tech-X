@@ -16,7 +16,7 @@ A small mod for people with small penises
 [[dependencies.cultivatedtech]]
     modId="bibliotheca"
     mandatory=true
-    versionRange="[1.4.0,)"
+    versionRange="[1.4.1,)"
     ordering="AFTER"
     side="BOTH"
 

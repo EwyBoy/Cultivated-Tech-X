@@ -1,7 +1,11 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop;
 
-import com.ewyboy.cultivatedtech.common.content.block.crop.base.TallCropBlock;
-import net.minecraft.block.*;
+import com.ewyboy.bibliotheca.common.loaders.ContentLoader;
+import com.ewyboy.cultivatedtech.common.content.block.crop.base.TallBushyBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FarmlandBlock;
+import net.minecraft.block.ILiquidContainer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,7 +27,7 @@ import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
 
-public class RiceBlock extends TallCropBlock implements ILiquidContainer {
+public class RiceBlock extends TallBushyBlock implements ILiquidContainer, ContentLoader.IHasNoBlockItem {
 
     public static final BooleanProperty IS_BOTTOM = BlockStateProperties.BOTTOM;
     public static final BooleanProperty BOOSTED = BlockStateProperties.POWERED;
@@ -38,15 +42,16 @@ public class RiceBlock extends TallCropBlock implements ILiquidContainer {
         int currentState = state.get(AGE);
         int prob = !world.getBlockState(pos).get(BOOSTED) ? 4 : 8;
 
-        if (world.getBlockState(pos.down()).getBlock() == this || isValidGround(state, world, pos)) {
-            if (random.nextInt(prob) == 0) {
-                if (world.getBlockState(pos).get(BOOSTED)) {
-                    world.addParticle(ParticleTypes.CRIT, 0.5, 0.5, 0.5, 0, 0.2, 0);
-                }
-                if (world.isAirBlock(pos.up()) && currentState == 7 && canContinueToGrow(world, pos)) {
+        if(world.getBlockState(pos).get(BOOSTED)) {
+            world.spawnParticle(ParticleTypes.BUBBLE, pos.getX(), pos.getY(), pos.getZ(), 10, random.nextDouble(),random.nextDouble(), random.nextDouble(), 0.125);
+        }
+
+        if(world.getBlockState(pos.down()).getBlock() == this || isValidGround(state, world, pos)) {
+            if(random.nextInt(prob) == 0) {
+                if(world.isAirBlock(pos.up()) && currentState == 7 && canContinueToGrow(world, pos)) {
                     world.setBlockState(pos.up(), state.with(AGE, 0).with(IS_BOTTOM, false));
                 }
-                if (currentState < 7) {
+                if(currentState < 7) {
                     world.setBlockState(pos, state.with(AGE, currentState + 1).with(BOOSTED, false));
                 }
             }
@@ -55,11 +60,11 @@ public class RiceBlock extends TallCropBlock implements ILiquidContainer {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if (state.get(AGE) == 7) {
+        if(state.get(AGE) == 7) {
             breakBlock(worldIn, pos);
             int minY = pos.getY() - 4;
-            for (; pos.getY() >= minY && !(worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock); pos = pos.down());
-            if (worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock)  {
+            for(; pos.getY() >= minY && !(worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock); pos = pos.down());
+            if(worldIn.getBlockState(pos).getBlock() instanceof FarmlandBlock) {
                 worldIn.setBlockState(pos.up(), state.with(AGE, 0).with(IS_BOTTOM, true).with(BOOSTED, false));
             }
             return ActionResultType.SUCCESS;
@@ -69,22 +74,29 @@ public class RiceBlock extends TallCropBlock implements ILiquidContainer {
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (entity instanceof AbstractGroupFishEntity) {
+        if(entity instanceof AbstractGroupFishEntity) {
             AbstractGroupFishEntity fish = (AbstractGroupFishEntity) entity;
-            if (!fish.preventDespawn()) {
+
+            if (!world.isRemote) {
+                ServerWorld serverWorld = (ServerWorld) world;
+                //serverWorld.spawnParticle(ParticleTypes.DOLPHIN, fish.getPosX(), fish.getPosY(), fish.getPosZ(), 10,0, 0, 0, 0.125);
+                //serverWorld.spawnParticle(ParticleTypes.BUBBLE, fish.getPosX(), fish.getPosY(), fish.getPosZ(), 10,0,0, 0, 0.125);
+            }
+
+            if(!fish.preventDespawn()) {
                 fish.setFromBucket(true);
             }
 
-            if (!world.getBlockState(pos).get(BOOSTED)) {
+            if(!world.getBlockState(pos).get(BOOSTED)) {
                 world.setBlockState(pos, state.with(BOOSTED, true));
             }
         }
     }
 
     private boolean canContinueToGrow(World world, BlockPos pos) {
-        for (int i = 0; i < 1; i++) {
+        for(int i = 0; i < 1; i++) {
             pos = pos.down();
-            if (world.getBlockState(pos).getBlock() != this) {
+            if(world.getBlockState(pos).getBlock() != this) {
                 return true;
             }
         }
@@ -93,12 +105,12 @@ public class RiceBlock extends TallCropBlock implements ILiquidContainer {
 
     @Override
     public boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.down()).getBlock() instanceof FarmlandBlock ||  worldIn.getBlockState(pos.down()).getBlock() == this;
+        return worldIn.getBlockState(pos.down()).getBlock() instanceof FarmlandBlock || worldIn.getBlockState(pos.down()).getBlock() == this;
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        if (state.get(IS_BOTTOM)) {
+        if(state.get(IS_BOTTOM)) {
             return Fluids.WATER.getStillFluidState(false);
         } else {
             return Fluids.EMPTY.getDefaultState();

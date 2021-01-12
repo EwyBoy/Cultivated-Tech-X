@@ -24,8 +24,7 @@ import java.util.Random;
 public class AdaptiveSoilBlock extends FarmlandBlock {
 
     public AdaptiveSoilBlock(Properties builder) {
-        super(builder);
-        builder.hardnessAndResistance(1.0f);
+        super(builder.tickRandomly().hardnessAndResistance(1.0f));
     }
 
     @Override
@@ -34,7 +33,7 @@ public class AdaptiveSoilBlock extends FarmlandBlock {
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (!state.isValidPosition(world, pos)) {
             turnToIndustrialDirt(world, pos);
         } else {

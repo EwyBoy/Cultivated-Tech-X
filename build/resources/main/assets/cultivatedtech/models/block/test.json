@@ -1,3 +1,6 @@
 {
-  "model": "cultivatedtech:block/generator/generator.obj"
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "cultivatedtech:block/liquid_ethanol_still"
+  }
 }

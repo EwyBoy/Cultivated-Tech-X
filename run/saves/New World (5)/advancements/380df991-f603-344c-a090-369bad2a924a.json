@@ -1,0 +1,24 @@
+{
+  "minecraft:recipes/misc/wheat": {
+    "criteria": {
+      "has_hay_block": "2021-01-12 21:36:35 +0100"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/target": {
+    "criteria": {
+      "has_hay_block": "2021-01-12 21:36:35 +0100"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:mountains": "2021-01-12 21:37:15 +0100",
+      "minecraft:taiga": "2021-01-12 21:35:44 +0100",
+      "minecraft:wooded_mountains": "2021-01-12 21:37:18 +0100",
+      "minecraft:plains": "2021-01-12 21:36:27 +0100"
+    },
+    "done": false
+  },
+  "DataVersion": 2584
+}

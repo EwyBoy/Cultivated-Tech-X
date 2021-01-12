@@ -1,7 +1,9 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
+import com.ewyboy.bibliotheca.Bibliotheca;
 import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaInfo;
 import com.ewyboy.cultivatedtech.common.register.Register;
+import com.sun.javafx.scene.web.Debugger;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
 import net.minecraft.block.Block;
@@ -31,12 +33,12 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
     private int type;
 
     public IndustrialSoilBlock(Properties builder, int type) {
-        super(builder);
+        super(builder.tickRandomly());
         this.type = type;
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int currentState = state.get(MOISTURE);
         Material moisturizer;
 
@@ -86,26 +88,26 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
     }
 
     @Override
-    public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
-        if (!worldIn.isRemote && entityIn.canTrample(worldIn.getBlockState(pos), pos, fallDistance)) {
-            turnToSoil(worldIn, pos);
+    public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
+        if (!world.isRemote && entity.canTrample(world.getBlockState(pos), pos, fallDistance)) {
+            turnToSoil(world, pos);
         }
-        super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
+        super.onFallenUpon(world, pos, entity, fallDistance);
     }
 
     @Override
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-        if (worldIn.getBlockState(pos.up()).getMaterial().isSolid()) {
-            turnToSoil(worldIn, pos);
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+        if (world.getBlockState(pos.up()).getMaterial().isSolid()) {
+            turnToSoil(world, pos);
         }
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-        super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
-        if (worldIn.getBlockState(pos.up()).getMaterial().isSolid()) {
-            turnToSoil(worldIn, pos);
+    public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onBlockAdded(state, world, pos, oldState, isMoving);
+        if (world.getBlockState(pos.up()).getMaterial().isSolid()) {
+            turnToSoil(world, pos);
         }
     }
 

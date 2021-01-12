@@ -1,5 +1,6 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
+import com.ewyboy.bibliotheca.client.interfaces.IHasRenderType;
 import com.ewyboy.bibliotheca.common.content.block.BaseTileBlock;
 import com.ewyboy.bibliotheca.common.helpers.TextHelper;
 import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaCamouflage;
@@ -9,6 +10,7 @@ import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -33,7 +35,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-public class EcoflamerBlock extends BaseTileBlock<EcoflamerTileEntity> implements IWailaInfo, IWailaCamouflage {
+public class EcoflamerBlock extends BaseTileBlock<EcoflamerTileEntity> implements IHasRenderType, IWailaInfo, IWailaCamouflage {
 
     @Override
     protected Class<EcoflamerTileEntity> getTileClass() {
@@ -95,5 +97,10 @@ public class EcoflamerBlock extends BaseTileBlock<EcoflamerTileEntity> implement
     @Override
     public ItemStack decorateBlock(IDataAccessor iDataAccessor, IPluginConfig iPluginConfig) {
         return new ItemStack(Items.ANVIL);
+    }
+
+    @Override
+    public RenderType getRenderType() {
+        return RenderType.getCutout();
     }
 }

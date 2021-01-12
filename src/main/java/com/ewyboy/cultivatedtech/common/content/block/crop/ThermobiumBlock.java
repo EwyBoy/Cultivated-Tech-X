@@ -48,10 +48,10 @@ public class ThermobiumBlock extends CropBlock {
             if (worldIn.getBlockState(pos.down()).getBlock() instanceof FarmlandBlock) {
                 if (!worldIn.isRemote) {
                     Random random = new Random();
-                    if (random.nextInt(32) == 0) {
+                    if (random.nextInt(4) == 0) {
                         worldIn.createExplosion(player, pos.getX(), pos.getY(), pos.getZ(), 3.0f, false, Explosion.Mode.NONE);
                         if (player.getPosition().withinDistance(new Vector3d(pos.getX(), pos.getY(), pos.getZ()), 2)) {
-                            player.attackEntityFrom(DamageSource.causePlayerDamage(player), 2.0f);
+                            player.attackEntityFrom(DamageSource.causeExplosionDamage(player), 4.0f);
                         }
                         worldIn.destroyBlock(pos, false);
                         worldIn.setBlockState(pos, state.with(AGE_0_12, 0));
@@ -72,7 +72,7 @@ public class ThermobiumBlock extends CropBlock {
     }
 
     @Override
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int currentState = state.get(AGE_0_12);
         if (canGrow(world, pos, state, false)) {
             if (random.nextInt(12) == 0) {
