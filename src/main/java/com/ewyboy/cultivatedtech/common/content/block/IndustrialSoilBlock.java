@@ -4,39 +4,49 @@ import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaInfo;
 import com.ewyboy.cultivatedtech.common.register.Register;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Items;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+
 public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo {
 
-    private int type;
+    private final int type;
 
     public IndustrialSoilBlock(Properties builder, int type) {
-        super(builder);
+        super(builder.randomTicks());
         this.type = type;
     }
 
     @Override
-    public void tick(BlockState state, World world, BlockPos pos, Random random) {
-        int currentState = state.get(MOISTURE);
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+        int currentState = state.getValue(MOISTURE);
         Material moisturizer;
 
         switch (type) {
@@ -48,83 +58,78 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
         if (!this.hasMoisture(world, pos, moisturizer)) {
             if (currentState > 0) {
                 switch (type) {
-                    case 1: world.setBlockState(pos, Register.BLOCK.industrialSoil1.getDefaultState().with(MOISTURE, currentState - 1), 2); break;
-                    case 2: world.setBlockState(pos, Register.BLOCK.industrialSoil2.getDefaultState().with(MOISTURE, currentState - 1), 2); break;
+                    case 1: world.setBlock(pos, Register.BLOCK.industrialSoil1.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
+                    case 2: world.setBlock(pos, Register.BLOCK.industrialSoil2.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
                 }
             } else if (!this.hasCrop(world, pos)) {
                 turnToSoil(world, pos);
             }
         } else if (currentState < 7) {
             switch (type) {
-                case 1: world.setBlockState(pos, Register.BLOCK.industrialSoil1.getDefaultState().with(MOISTURE, 7), 2); break;
-                case 2: world.setBlockState(pos, Register.BLOCK.industrialSoil2.getDefaultState().with(MOISTURE, 7), 2); break;
+                case 1: world.setBlock(pos, Register.BLOCK.industrialSoil1.defaultBlockState().setValue(MOISTURE, 7), 2); break;
+                case 2: world.setBlock(pos, Register.BLOCK.industrialSoil2.defaultBlockState().setValue(MOISTURE, 7), 2); break;
             }
         }
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.TRANSLUCENT;
-    }
-
-    @Override
-    public boolean onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-        if (player.getHeldItem(hand).getItem() == Items.NETHER_WART && type == 2) {
-            world.setBlockState(pos.up(), Blocks.NETHER_WART.getDefaultState());
+    public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+        if (player.getItemInHand(hand).getItem() == Items.NETHER_WART && type == 2) {
+            world.setBlockAndUpdate(pos.above(), Blocks.NETHER_WART.defaultBlockState());
             // TODO - Swing arm
             // TODO - Randomize sound pitch / volume
-            world.playSound(player, pos.up(), SoundEvents.BLOCK_LILY_PAD_PLACE, SoundCategory.PLAYERS, 1.0f, 1.0f);
-            return true;
+            world.playSound(player, pos.above(), SoundEvents.LILY_PAD_PLACE, SoundSource.PLAYERS, 1.0f, 1.0f);
+            return InteractionResult.SUCCESS;
         }
-        return super.onBlockActivated(state, world, pos, player, hand, hit);
+        return super.use(state, world, pos, player, hand, hit);
     }
 
     @Override
-    public void onEntityWalk(World world, BlockPos pos, Entity entity) {
+    public void stepOn(Level world, BlockPos pos, Entity entity) {
         if (type == 2) {
-            if (!entity.isImmuneToFire() && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
-                entity.attackEntityFrom(DamageSource.HOT_FLOOR, 1.0F);
+            if (!entity.fireImmune() && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
+                entity.hurt(DamageSource.HOT_FLOOR, 1.0F);
             }
         }
-        super.onEntityWalk(world, pos, entity);
+        super.stepOn(world, pos, entity);
     }
 
     @Override
-    public void onFallenUpon(World worldIn, BlockPos pos, Entity entityIn, float fallDistance) {
-        if (!worldIn.isRemote && entityIn.canTrample(worldIn.getBlockState(pos), pos, fallDistance)) {
-            turnToSoil(worldIn, pos);
+    public void fallOn(Level world, BlockPos pos, Entity entity, float fallDistance) {
+        if (!world.isClientSide && entity.canTrample(world.getBlockState(pos), pos, fallDistance)) {
+            turnToSoil(world, pos);
         }
-        super.onFallenUpon(worldIn, pos, entityIn, fallDistance);
+        super.fallOn(world, pos, entity, fallDistance);
     }
 
     @Override
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-        super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-        if (worldIn.getBlockState(pos.up()).getMaterial().isSolid()) {
-            turnToSoil(worldIn, pos);
+    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        super.neighborChanged(state, world, pos, block, fromPos, isMoving);
+        if (world.getBlockState(pos.above()).getMaterial().isSolid()) {
+            turnToSoil(world, pos);
         }
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-        super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
-        if (worldIn.getBlockState(pos.up()).getMaterial().isSolid()) {
-            turnToSoil(worldIn, pos);
+    public void onPlace(BlockState state, Level world, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onPlace(state, world, pos, oldState, isMoving);
+        if (world.getBlockState(pos.above()).getMaterial().isSolid()) {
+            turnToSoil(world, pos);
         }
     }
 
-    private static void turnToSoil(World world, BlockPos pos) {
-        world.setBlockState(pos, Register.BLOCK.adaptiveSoil.getDefaultState(), 2);
+    private static void turnToSoil(Level world, BlockPos pos) {
+        world.setBlock(pos, Register.BLOCK.adaptiveSoil.defaultBlockState(), 2);
     }
 
 
-    private boolean hasCrop(World worldIn, BlockPos pos) {
-        Block block = worldIn.getBlockState(pos.up()).getBlock();
+    private boolean hasCrop(Level worldIn, BlockPos pos) {
+        Block block = worldIn.getBlockState(pos.above()).getBlock();
         return block instanceof IPlantable && canSustainPlant(worldIn.getBlockState(pos), worldIn, pos, Direction.UP, (IPlantable) block);
     }
 
-    private boolean hasMoisture(World world, BlockPos pos, Material moisturizer) {
-        for (BlockPos blockPos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4))) {
+    private boolean hasMoisture(Level world, BlockPos pos, Material moisturizer) {
+        for (BlockPos blockPos : BlockPos.betweenClosed(pos.offset(-4, 0, -4), pos.offset(4, 1, 4))) {
             if (world.getBlockState(blockPos).getMaterial() == moisturizer) {
                 return true;
             }
@@ -133,13 +138,13 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
     }
 
     @Override
-    public void getWailaBody(List<ITextComponent> list, IDataAccessor iDataAccessor, IPluginConfig iPluginConfig) {
-        if (iDataAccessor.getPlayer().isSneaking()) {
-            list.add(new StringTextComponent("Moisture: " + (int) iDataAccessor.getBlockState().get(MOISTURE)));
-            if (iDataAccessor.getBlockState().get(MOISTURE) == 7) {
+    public void getWailaBody(List<Component> list, IDataAccessor iDataAccessor, IPluginConfig iPluginConfig) {
+        if (iDataAccessor.getPlayer().isShiftKeyDown()) {
+            list.add(new TextComponent("Moisture: " + (int) iDataAccessor.getBlockState().getValue(MOISTURE)));
+            if (iDataAccessor.getBlockState().getValue(MOISTURE) == 7) {
                 switch (type) {
-                    case 1: list.add(new StringTextComponent("Moisturizer: " + TextFormatting.BLUE + "Water")); break;
-                    case 2: list.add(new StringTextComponent("Moisturizer: " + TextFormatting.RED + "LAVA")); break;
+                    case 1: list.add(new TextComponent("Moisturizer: " + ChatFormatting.BLUE + "Water")); break;
+                    case 2: list.add(new TextComponent("Moisturizer: " + ChatFormatting.RED + "LAVA")); break;
                 }
             }
         }

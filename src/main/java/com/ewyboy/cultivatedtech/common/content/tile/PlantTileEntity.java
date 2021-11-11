@@ -1,14 +1,15 @@
 package com.ewyboy.cultivatedtech.common.content.tile;
 
 import com.ewyboy.cultivatedtech.common.register.Register;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import javax.annotation.Nullable;
 
-public class PlantTileEntity extends TileEntity {
+public class PlantTileEntity extends BlockEntity {
 
     private int growth;
     private int yield;
@@ -35,31 +36,32 @@ public class PlantTileEntity extends TileEntity {
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.pos, 1, this.getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return this.write(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return this.save(new CompoundTag());
     }
 
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(pkt.getNbtCompound());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        load(getBlockState(), pkt.getTag());
+    }
+
+
+    @Override
+    public void load(BlockState state, CompoundTag nbt) {
+        super.load(state, nbt);
+        setGrowth(nbt.getInt("growth"));
+        setYield(nbt.getInt("yield"));
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
-        setGrowth(compound.getInt("growth"));
-        setYield(compound.getInt("yield"));
-    }
-
-    @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundTag save(CompoundTag compound) {
+        super.save(compound);
         compound.putInt("growth", getGrowth());
         compound.putInt("yield", getYield());
         return compound;

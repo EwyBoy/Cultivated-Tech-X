@@ -1,58 +1,57 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BushBlock;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
+import com.ewyboy.bibliotheca.client.interfaces.IHasRenderType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.common.Tags;
 
-public class HellRootBlock extends BushBlock {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(0.099D, 0.0D, 0.099D, 0.899D, 0.800D, 0.899D);
+public class HellRootBlock extends BushBlock implements IHasRenderType {
+
+    private static final VoxelShape SHAPE = Block.box(0.099D, 0.0D, 0.099D, 0.899D, 0.800D, 0.899D);
 
     public HellRootBlock(Properties properties) {
         super(properties);
-        properties.doesNotBlockMovement();
+        properties.noCollission();
+        properties.noOcclusion();
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 
     @Override
-    public boolean isSolid(BlockState state) {
-        return false;
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+        return Tags.Blocks.NETHERRACK.contains(worldIn.getBlockState(pos.above()).getBlock());
     }
 
     @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
+    protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
+        return Tags.Blocks.NETHERRACK.contains(worldIn.getBlockState(pos.above()).getBlock());
     }
 
     @Override
-    public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-        return Tags.Blocks.NETHERRACK.contains(worldIn.getBlockState(pos.up()).getBlock());
+    public long getSeed(BlockState state, BlockPos pos) {
+        return super.getSeed(state, pos);
     }
 
     @Override
-    protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return Tags.Blocks.NETHERRACK.contains(worldIn.getBlockState(pos.up()).getBlock());
+    public PlantType getPlantType(BlockGetter world, BlockPos pos) {
+        return PlantType.NETHER;
     }
 
     @Override
-    public long getPositionRandom(BlockState state, BlockPos pos) {
-        return super.getPositionRandom(state, pos);
-    }
-
-    @Override
-    public PlantType getPlantType(IBlockReader world, BlockPos pos) {
-        return PlantType.Nether;
+    public RenderType getRenderType() {
+        return RenderType.cutout();
     }
 }

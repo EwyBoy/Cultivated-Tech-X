@@ -7,18 +7,19 @@ import com.ewyboy.bibliotheca.util.LazyOptionalHelper;
 import com.ewyboy.bibliotheca.util.ModLogger;
 import com.ewyboy.cultivatedtech.common.register.Register;
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IGrowable;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
@@ -32,7 +33,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class EcoflamerTileEntity extends TileEntity implements ITickableTileEntity {
+public class EcoflamerTileEntity extends BlockEntity implements TickableBlockEntity {
 
     private static final int capacity = 8000;
     private static final int maxReceive = 1000;
@@ -49,12 +50,12 @@ public class EcoflamerTileEntity extends TileEntity implements ITickableTileEnti
     public void tick() {
         Random random = new Random();
 
-        if (world != null && !world.isRemote && world.getGameTime() % 100 == 0) {
+        if (level != null && !level.isClientSide && level.getGameTime() % 100 == 0) {
 
             ModLogger.info(storage.getEnergyStored() + ": RF");
 
             if (surroundingBlockList == null)
-                surroundingBlockList = BlockPos.getAllInBox(pos.add(-3, -1, -3), pos.add(3, 1, 3)).map(BlockPos::toImmutable).collect(Collectors.toList());
+                surroundingBlockList = BlockPos.betweenClosedStream(worldPosition.offset(-3, -1, -3), worldPosition.offset(3, 1, 3)).map(BlockPos::immutable).collect(Collectors.toList());
             Collections.shuffle(surroundingBlockList);
             final int maxTires = 3;
             int tries = 0;
@@ -62,16 +63,16 @@ public class EcoflamerTileEntity extends TileEntity implements ITickableTileEnti
             for (BlockPos targetPos : surroundingBlockList) {
                 if (tries >= maxTires) break;
                 tries++;
-                if (world.getBlockState(targetPos).getBlock() == Blocks.GRASS_BLOCK) {
-                    world.setBlockState(targetPos, Blocks.DIRT.getDefaultState(), 3);
-                    world.notifyBlockUpdate(pos, this.getBlockState(), this.getBlockState(), 3);
-                    ServerWorld serverWorld = (ServerWorld) world;
-                    serverWorld.playSound(null, targetPos.getX(), targetPos.getY(), targetPos.getZ(), SoundEvents.BLOCK_GRASS_BREAK, SoundCategory.BLOCKS, 1.0F, 0.8F + random.nextFloat() * 0.4F);
+                if (level.getBlockState(targetPos).getBlock() == Blocks.GRASS_BLOCK) {
+                    level.setBlock(targetPos, Blocks.DIRT.defaultBlockState(), 3);
+                    level.sendBlockUpdated(worldPosition, this.getBlockState(), this.getBlockState(), 3);
+                    ServerLevel serverWorld = (ServerLevel) level;
+                    serverWorld.playSound(null, targetPos.getX(), targetPos.getY(), targetPos.getZ(), SoundEvents.GRASS_BREAK, SoundSource.BLOCKS, 1.0F, 0.8F + random.nextFloat() * 0.4F);
                     storage.addEnergy(1000);
                     break;
-                } else if (world.getBlockState(targetPos).getBlock() instanceof IPlantable || world.getBlockState(targetPos).getBlock() instanceof IGrowable) {
-                    world.destroyBlock(targetPos, false);
-                    world.notifyBlockUpdate(pos, this.getBlockState(), this.getBlockState(), 3);
+                } else if (level.getBlockState(targetPos).getBlock() instanceof IPlantable || level.getBlockState(targetPos).getBlock() instanceof BonemealableBlock) {
+                    level.destroyBlock(targetPos, false);
+                    level.sendBlockUpdated(worldPosition, this.getBlockState(), this.getBlockState(), 3);
                     storage.addEnergy(1000);
                     break;
                 }
@@ -84,31 +85,31 @@ public class EcoflamerTileEntity extends TileEntity implements ITickableTileEnti
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 0, write(new CompoundNBT()));
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(worldPosition, 0, save(new CompoundTag()));
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
-        this.read(packet.getNbtCompound());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet) {
+        this.load(getBlockState(), packet.getTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return this.write(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return this.save(new CompoundTag());
     }
 
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundTag save(CompoundTag compound) {
         storage.save(compound);
-        return super.write(compound);
+        return super.save(compound);
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        storage.load(compound);
-        super.read(compound);
+    public void load(BlockState state, CompoundTag nbt) {
+        storage.load(nbt);
+        super.load(state, nbt);
     }
 
     private LazyOptional<IEnergyStorage> getEnergyOptional() {

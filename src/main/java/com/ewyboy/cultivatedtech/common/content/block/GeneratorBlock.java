@@ -1,17 +1,14 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
 import com.ewyboy.bibliotheca.client.interfaces.IHasSpecialRenderer;
-import com.ewyboy.bibliotheca.common.content.block.TileBaseBlock;
-import com.ewyboy.cultivatedtech.client.GeneratorTESR;
+import com.ewyboy.bibliotheca.common.content.block.BaseTileBlock;
 import com.ewyboy.cultivatedtech.common.content.tile.GeneratorTileEntity;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class GeneratorBlock extends TileBaseBlock<GeneratorTileEntity> implements IHasSpecialRenderer {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class GeneratorBlock extends BaseTileBlock<GeneratorTileEntity> implements IHasSpecialRenderer {
 
     @Override
     protected Class<GeneratorTileEntity> getTileClass() {
@@ -24,27 +21,13 @@ public class GeneratorBlock extends TileBaseBlock<GeneratorTileEntity> implement
 
     @Override
     public void initSpecialRenderer() {
-        ClientRegistry.bindTileEntitySpecialRenderer(GeneratorTileEntity.class, new GeneratorTESR());
+        //ClientRegistry.bindTileEntitySpecialRenderer(GeneratorTileEntity.class, new GeneratorTESR());
+        //ClientRegistry.bindTileEntityRenderer(GeneratorTileEntity.class, new GeneratorTESR());
     }
 
     @Override
-    public boolean isSolid(BlockState state) {
-        return false;
-    }
-
-    @Override
-    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
-        return false;
-    }
-
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
     }
 
 }

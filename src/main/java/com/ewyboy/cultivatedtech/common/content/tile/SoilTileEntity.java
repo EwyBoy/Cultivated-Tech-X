@@ -1,20 +1,22 @@
 package com.ewyboy.cultivatedtech.common.content.tile;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
+import com.ewyboy.cultivatedtech.common.register.Register;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.tileentity.TileEntityType;
 
 import javax.annotation.Nullable;
 
-public class SoilTileEntity extends TileEntity {
+public class SoilTileEntity extends BlockEntity {
 
     private int fertile;
     private int growth;
 
-    public SoilTileEntity(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
+    public SoilTileEntity() {
+        super(Register.TILE.soil);
     }
 
     public int getFertile() {
@@ -23,7 +25,7 @@ public class SoilTileEntity extends TileEntity {
 
     public void setFertile(int fertile) {
         this.fertile = fertile;
-        this.markDirty();
+        this.setChanged();
     }
 
     public int getGrowth() {
@@ -32,37 +34,37 @@ public class SoilTileEntity extends TileEntity {
 
     public void setGrowth(int growth) {
         this.growth = growth;
-        this.markDirty();
+        this.setChanged();
     }
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(this.pos, 1, this.getUpdateTag());
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return new ClientboundBlockEntityDataPacket(this.worldPosition, 1, this.getUpdateTag());
     }
 
     @Override
-    public CompoundNBT getUpdateTag() {
-        return this.write(new CompoundNBT());
+    public CompoundTag getUpdateTag() {
+        return this.save(new CompoundTag());
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(pkt.getNbtCompound());
+    public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
+        load(getBlockState(), pkt.getTag());
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundTag save(CompoundTag compound) {
+        super.save(compound);
         compound.putInt("fertile", fertile);
         compound.putInt("growth", growth);
         return compound;
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
-        fertile = compound.getInt("fertile");
-        growth = compound.getInt("growth");
+    public void load(BlockState state, CompoundTag nbt) {
+        super.load(state, nbt);
+        fertile = nbt.getInt("fertile");
+        growth = nbt.getInt("growth");
     }
 }

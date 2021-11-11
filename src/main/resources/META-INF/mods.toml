@@ -1,5 +1,6 @@
 modLoader="javafml"
-loaderVersion="[28,)"
+loaderVersion="[32,)"
+license="MIT"
 issueTrackerURL="https://github.com/EwyBoy/Cultivated-Tech/issues"
 
 [[mods]]
@@ -15,20 +16,20 @@ A small mod for people with small penises
 [[dependencies.cultivatedtech]]
     modId="bibliotheca"
     mandatory=true
-    versionRange="[1.4.0,)"
+    versionRange="[1.4.1,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.cultivatedtech]]
     modId="forge"
     mandatory=true
-    versionRange="[28.1.61,)"
+    versionRange="[33.0.+,)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.cultivatedtech]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.16.+,]"
     ordering="NONE"
     side="BOTH"

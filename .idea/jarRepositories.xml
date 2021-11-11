@@ -12,11 +12,6 @@
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="tehnut" />
-      <option name="name" value="tehnut" />
-      <option name="url" value="https://tehnut.info/maven" />
-    </remote-repository>
-    <remote-repository>
       <option name="id" value="maven2" />
       <option name="name" value="maven2" />
       <option name="url" value="https://libraries.minecraft.net/" />
@@ -29,17 +24,22 @@
     <remote-repository>
       <option name="id" value="maven" />
       <option name="name" value="maven" />
-      <option name="url" value="https://files.minecraftforge.net/maven/" />
+      <option name="url" value="https://maven.minecraftforge.net/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="progwml6" />
-      <option name="name" value="progwml6" />
-      <option name="url" value="http://dvs1.progwml6.com/files/maven" />
+      <option name="id" value="maven" />
+      <option name="name" value="maven" />
+      <option name="url" value="https://www.cursemaven.com" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="tehnut" />
+      <option name="name" value="tehnut" />
+      <option name="url" value="https://maven.tehnut.info" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="MavenLocal" />
       <option name="name" value="MavenLocal" />
-      <option name="url" value="file:/$MAVEN_REPOSITORY$/" />
+      <option name="url" value="file:/$MAVEN_REPOSITORY$" />
     </remote-repository>
   </component>
 </project>

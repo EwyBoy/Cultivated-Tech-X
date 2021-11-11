@@ -2,112 +2,114 @@ package com.ewyboy.cultivatedtech.common.content.block;
 
 import com.ewyboy.cultivatedtech.common.content.tile.SoilTileEntity;
 import com.ewyboy.cultivatedtech.common.register.Register;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FarmlandBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.StateContainer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.FarmlandWaterManager;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
 
-public class AdaptiveSoilBlock extends FarmlandBlock {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class AdaptiveSoilBlock extends FarmBlock {
 
     public AdaptiveSoilBlock(Properties builder) {
-        super(builder);
-        builder.hardnessAndResistance(1.0f);
+        super(builder.randomTicks().strength(1.0f));
     }
 
     @Override
-    public boolean ticksRandomly(BlockState state) {
+    public boolean isRandomlyTicking(BlockState state) {
         return true;
     }
 
     @Override
-    public void tick(BlockState state, World world, BlockPos pos, Random random) {
-        if (!state.isValidPosition(world, pos)) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+        if (!state.canSurvive(world, pos)) {
             turnToIndustrialDirt(world, pos);
         } else {
-            int currentState = state.get(MOISTURE);
+            int currentState = state.getValue(MOISTURE);
             if (!hasMoisture(world, pos)) {
                 if (currentState > 0) {
-                    world.setBlockState(pos, state.with(MOISTURE, currentState - 1), 2);
+                    world.setBlock(pos, state.setValue(MOISTURE, currentState - 1), 2);
                 } else if (!hasCrop(world, pos)) {
                     turnToIndustrialDirt(world, pos);
                 }
             } else if (currentState < 7) {
                 Material moisturizer = findMoisturizer(world, pos);
                 if (moisturizer == Material.WATER) {
-                    world.setBlockState(pos, Register.BLOCK.industrialSoil1.getDefaultState().with(MOISTURE, 7));
+                    world.setBlockAndUpdate(pos, Register.BLOCK.industrialSoil1.defaultBlockState().setValue(MOISTURE, 7));
                 } else if (moisturizer == Material.LAVA) {
-                    world.setBlockState(pos, Register.BLOCK.industrialSoil2.getDefaultState().with(MOISTURE, 7));
+                    world.setBlockAndUpdate(pos, Register.BLOCK.industrialSoil2.defaultBlockState().setValue(MOISTURE, 7));
                 }
             }
         }
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return !this.getDefaultState().isValidPosition(context.getWorld(), context.getPos()) ? Register.BLOCK.industrialDirt.getDefaultState() : super.getStateForPlacement(context);
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? Register.BLOCK.industrialDirt.defaultBlockState() : super.getStateForPlacement(context);
     }
 
-    private boolean hasCrop(World world, BlockPos pos) {
-        Block block = world.getBlockState(pos.up()).getBlock();
+    private boolean hasCrop(Level world, BlockPos pos) {
+        Block block = world.getBlockState(pos.above()).getBlock();
         return block instanceof IPlantable && canSustainPlant(world.getBlockState(pos), world, pos, Direction.UP, (IPlantable) block);
     }
 
     @Override
-    public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable) {
+    public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
         return true;
     }
 
     @Override
-    public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+    public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
         super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
-        if (worldIn.getBlockState(pos.up()).getMaterial().isSolid()) {
+        if (worldIn.getBlockState(pos.above()).getMaterial().isSolid()) {
             turnToIndustrialDirt(worldIn, pos);
         }
     }
 
     @Override
-    public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-        super.onBlockAdded(state, worldIn, pos, oldState, isMoving);
-        if (worldIn.getBlockState(pos.up()).getMaterial().isSolid()) {
+    public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+        super.onPlace(state, worldIn, pos, oldState, isMoving);
+        if (worldIn.getBlockState(pos.above()).getMaterial().isSolid()) {
             turnToIndustrialDirt(worldIn, pos);
         }
     }
 
     @Override
-    public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
-        if (!world.isRemote && entity.canTrample(world.getBlockState(pos), pos, fallDistance)) {
+    public void fallOn(Level world, BlockPos pos, Entity entity, float fallDistance) {
+        if (!world.isClientSide && entity.canTrample(world.getBlockState(pos), pos, fallDistance)) {
             turnToIndustrialDirt(world, pos);
         }
     }
 
-    private static void turnToIndustrialDirt(World world, BlockPos pos) {
-        world.setBlockState(pos, Register.BLOCK.industrialDirt.getDefaultState(), 2);
+    private static void turnToIndustrialDirt(Level world, BlockPos pos) {
+        world.setBlock(pos, Register.BLOCK.industrialDirt.defaultBlockState(), 2);
     }
 
-    private static boolean hasMoisture(IWorldReader world, BlockPos pos) {
-        for(BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4))) {
-            if (world.getFluidState(blockpos).isTagged(FluidTags.WATER) || world.getFluidState(blockpos).isTagged(FluidTags.LAVA)) {
+    private static boolean hasMoisture(LevelReader world, BlockPos pos) {
+        for(BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-4, 0, -4), pos.offset(4, 1, 4))) {
+            if (world.getFluidState(blockpos).is(FluidTags.WATER) || world.getFluidState(blockpos).is(FluidTags.LAVA)) {
                 return true;
             }
         }
         return FarmlandWaterManager.hasBlockWaterTicket(world, pos);
     }
 
-    private static Material findMoisturizer(World world, BlockPos pos) {
-        for (BlockPos blockPos : BlockPos.getAllInBoxMutable(pos.add(-1,0,-1), pos.add(1,1,1))) {
+    private static Material findMoisturizer(Level world, BlockPos pos) {
+        for (BlockPos blockPos : BlockPos.betweenClosed(pos.offset(-1,0,-1), pos.offset(1,1,1))) {
             if (world.getBlockState(blockPos).getMaterial() == Material.WATER) {
                 return Material.WATER;
             } else if (world.getBlockState(blockPos).getMaterial() == Material.LAVA) {
@@ -117,12 +119,12 @@ public class AdaptiveSoilBlock extends FarmlandBlock {
         return null;
     }
 
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(MOISTURE);
     }
 
-    private SoilTileEntity getTE(World world, BlockPos pos) {
-        return (SoilTileEntity) world.getTileEntity(pos);
+    private SoilTileEntity getTE(Level world, BlockPos pos) {
+        return (SoilTileEntity) world.getBlockEntity(pos);
     }
 
 }

@@ -1,28 +1,24 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop;
 
-import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaCamouflage;
-import com.ewyboy.cultivatedtech.common.content.block.crop.base.TallCropBlock;
-import com.ewyboy.cultivatedtech.common.register.Register;
+import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaInfo;
+import com.ewyboy.cultivatedtech.common.content.block.crop.base.TallBushyBlock;
 import mcp.mobius.waila.api.IDataAccessor;
 import mcp.mobius.waila.api.IPluginConfig;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IEnviromentBlockReader;
+import net.minecraft.network.chat.Component;
 
-import javax.annotation.Nullable;
+import java.util.List;
 
-public class HempBlock extends TallCropBlock implements IWailaCamouflage {
+import static com.ewyboy.bibliotheca.common.loaders.ContentLoader.IHasNoBlockItem;
+
+import com.ewyboy.bibliotheca.common.loaders.ContentLoader.IHasNoBlockItem;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class HempBlock extends TallBushyBlock implements IWailaInfo, IHasNoBlockItem {
 
     public HempBlock(Properties properties) {
         super(properties);
     }
 
     @Override
-    public ItemStack decorateBlock(IDataAccessor iDataAccessor, IPluginConfig iPluginConfig) {
-        return new ItemStack(Item.getItemFromBlock(Register.BLOCK.hemp));
-    }
+    public void getWailaBody(List<Component> list, IDataAccessor iDataAccessor, IPluginConfig iPluginConfig) {}
 }

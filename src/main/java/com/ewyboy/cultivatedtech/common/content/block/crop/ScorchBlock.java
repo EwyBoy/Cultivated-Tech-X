@@ -1,39 +1,39 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop;
 
-import com.ewyboy.cultivatedtech.common.content.block.crop.base.SmallCropBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import com.ewyboy.bibliotheca.common.loaders.ContentLoader;
+import com.ewyboy.cultivatedtech.common.content.block.crop.base.SmallBushyBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.PlantType;
 
-public class ScorchBlock extends SmallCropBlock {
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class ScorchBlock extends SmallBushyBlock implements ContentLoader.IHasNoBlockItem {
 
     public ScorchBlock(Properties builder) {
         super(builder);
     }
 
     @Override
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        double x = entity.getMotion().getX() * (1.0-(state.get(AGE) / 14.0));
-        double z = entity.getMotion().getX() * (1.0-(state.get(AGE) / 14.0));
+    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+        double x = entity.getDeltaMovement().x() * (1.0 - (state.getValue(AGE) / 14.0));
+        double z = entity.getDeltaMovement().x() * (1.0 - (state.getValue(AGE) / 14.0));
 
-        entity.setMotion(x, entity.getMotion().getY(), z);
+        entity.setDeltaMovement(x, entity.getDeltaMovement().y(), z);
 
-        if (entity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) entity;
-            player.setFire(1);
+        if(entity instanceof Player) {
+            Player player = (Player) entity;
+            player.setSecondsOnFire(1);
         }
     }
 
     @Override
-    public PlantType getPlantType(IBlockReader world, BlockPos pos) {
-        return PlantType.Nether;
+    public PlantType getPlantType(BlockGetter world, BlockPos pos) {
+        return PlantType.NETHER;
     }
 
 }

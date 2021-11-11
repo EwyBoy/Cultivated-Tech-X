@@ -1,7 +1,6 @@
- package com.ewyboy.cultivatedtech.common.generators;;
+/*
+ package com.ewyboy.cultivatedtech.common.generators;
 
- import com.ewyboy.bibliotheca.common.loaders.BlockLoader;
- import com.ewyboy.bibliotheca.common.loaders.ContentLoader;
  import com.ewyboy.cultivatedtech.common.register.Register;
  import com.google.common.collect.ImmutableList;
  import com.mojang.datafixers.util.Pair;
@@ -11,10 +10,10 @@
  import net.minecraft.data.loot.BlockLootTables;
  import net.minecraft.util.IItemProvider;
  import net.minecraft.util.ResourceLocation;
- import net.minecraft.world.storage.loot.LootParameterSet;
- import net.minecraft.world.storage.loot.LootTable;
- import net.minecraft.world.storage.loot.ValidationResults;
- import net.minecraftforge.client.model.generators.*;
+ import net.minecraftforge.client.model.generators.ConfiguredModel;
+ import net.minecraftforge.client.model.generators.ItemModelBuilder;
+ import net.minecraftforge.client.model.generators.ModelFile;
+ import net.minecraftforge.common.data.ExistingFileHelper;
  import net.minecraftforge.common.data.LanguageProvider;
  import net.minecraftforge.registries.IForgeRegistryEntry;
  import org.apache.commons.lang3.StringUtils;
@@ -29,7 +28,7 @@
  import java.util.function.Supplier;
  import java.util.stream.Collectors;
 
-public class DataGenerators {
+ public class DataGenerators {
 
     public static class Lang extends LanguageProvider {
 
@@ -166,9 +165,9 @@ public class DataGenerators {
             protected void addTables() {
                 //dropSelf(() -> Register.BLOCK.adaptiveSoil);
                 //dropSelf(() -> Register.BLOCK.industrialDirt);
-                dropSelf(() -> Register.BLOCK.ecoflamer);
+                //dropSelf(() -> Register.BLOCK.ecoflamer);
                 //dropSelf(() -> Register.BLOCK.industrialSoil1);
-               // dropSelf(() -> Register.BLOCK.industrialSoil2);
+                //dropSelf(() -> Register.BLOCK.industrialSoil2);
             }
 
             public void dropSelf(Supplier<? extends Block> block) {
@@ -186,7 +185,8 @@ public class DataGenerators {
 
         @Override
         protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
-            /*shapedRecipe(SimplyRandom.instance.cobblestone_generator_block)
+            */
+/*shapedRecipe(SimplyRandom.instance.cobblestone_generator_block)
                     .key('P', Items.IRON_PICKAXE)
                     .key('L', Items.LAVA_BUCKET)
                     .key('W', Items.WATER_BUCKET)
@@ -207,7 +207,8 @@ public class DataGenerators {
                     .patternLine("OOO")
                     .setGroup("tree_farm")
                     .addCriterion("has_tree_farm", hasItem(SimplyRandom.instance.tree_farm_block))
-                    .build(consumer);*/
+                    .build(consumer);*//*
+
         }
 
         private InventoryChangeTrigger.Instance hasItem(Supplier<? extends IItemProvider> item) {
@@ -228,3 +229,4 @@ public class DataGenerators {
         }
     }
 }
+*/
