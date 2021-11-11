@@ -12,6 +12,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
 @Mod(CultivatedTech.MOD_ID)
 @Mod.EventBusSubscriber(modid = CultivatedTech.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -24,7 +25,7 @@ public class CultivatedTech {
         @Override
         @OnlyIn(Dist.CLIENT)
         public ItemStack makeIcon() {
-            return new ItemStack(Register.BLOCK.ecoflamer);
+            return new ItemStack(Register.BLOCK.ECOFLAMER);
         }
     };
 

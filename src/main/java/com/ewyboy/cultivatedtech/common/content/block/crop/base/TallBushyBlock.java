@@ -115,7 +115,7 @@ public class TallBushyBlock extends BushyBlock {
                 for (int y = groundPos.getY() + 5; y > groundPos.getY(); y--) {
                     BlockPos targetPos = new BlockPos(pos.getX(), y, pos.getZ());
                     ModLogger.info(targetPos.toString());
-                    if (!isAir(world.getBlockState(targetPos), world, targetPos)) {
+                    if (!isAir(world.getBlockState(targetPos))) {
                         if(world.getBlockState(targetPos).getBlock() == this) {
                             lootList.add(getDrops(world.getBlockState(targetPos), (ServerLevel) world, targetPos, null));
                             world.destroyBlock(targetPos, false);

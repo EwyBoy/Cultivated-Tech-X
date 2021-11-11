@@ -27,7 +27,7 @@ public class TestFluid extends ForgeFlowingFluid {
 
         public Source(Properties properties) {
             super(properties);
-            registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
+            //registerDefaultState(getStateDefinition().any().setValue(LEVEL, 7));
         }
 
         protected void createFluidStateDefinition(StateDefinition.Builder<Fluid, FluidState> builder) {

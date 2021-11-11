@@ -1,6 +1,5 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
-import com.ewyboy.cultivatedtech.common.content.tile.SoilTileEntity;
 import com.ewyboy.cultivatedtech.common.register.Register;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,8 +19,6 @@ import net.minecraftforge.common.FarmlandWaterManager;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.Random;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class AdaptiveSoilBlock extends FarmBlock {
 
@@ -49,9 +46,9 @@ public class AdaptiveSoilBlock extends FarmBlock {
             } else if (currentState < 7) {
                 Material moisturizer = findMoisturizer(world, pos);
                 if (moisturizer == Material.WATER) {
-                    world.setBlockAndUpdate(pos, Register.BLOCK.industrialSoil1.defaultBlockState().setValue(MOISTURE, 7));
+                    world.setBlockAndUpdate(pos, Register.BLOCK.INDUSTRIAL_SOIL_1.defaultBlockState().setValue(MOISTURE, 7));
                 } else if (moisturizer == Material.LAVA) {
-                    world.setBlockAndUpdate(pos, Register.BLOCK.industrialSoil2.defaultBlockState().setValue(MOISTURE, 7));
+                    world.setBlockAndUpdate(pos, Register.BLOCK.INDUSTRIAL_SOIL_2.defaultBlockState().setValue(MOISTURE, 7));
                 }
             }
         }
@@ -59,7 +56,7 @@ public class AdaptiveSoilBlock extends FarmBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? Register.BLOCK.industrialDirt.defaultBlockState() : super.getStateForPlacement(context);
+        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? Register.BLOCK.INDUSTRIAL_DIRT.defaultBlockState() : super.getStateForPlacement(context);
     }
 
     private boolean hasCrop(Level world, BlockPos pos) {
@@ -89,14 +86,15 @@ public class AdaptiveSoilBlock extends FarmBlock {
     }
 
     @Override
-    public void fallOn(Level world, BlockPos pos, Entity entity, float fallDistance) {
-        if (!world.isClientSide && entity.canTrample(world.getBlockState(pos), pos, fallDistance)) {
-            turnToIndustrialDirt(world, pos);
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+        if (!level.isClientSide && entity.canTrample(level.getBlockState(pos), pos, fallDistance)) {
+            turnToIndustrialDirt(level, pos);
         }
+        super.fallOn(level, state, pos, entity, fallDistance);
     }
 
     private static void turnToIndustrialDirt(Level world, BlockPos pos) {
-        world.setBlock(pos, Register.BLOCK.industrialDirt.defaultBlockState(), 2);
+        world.setBlock(pos, Register.BLOCK.INDUSTRIAL_DIRT.defaultBlockState(), 2);
     }
 
     private static boolean hasMoisture(LevelReader world, BlockPos pos) {
@@ -121,10 +119,6 @@ public class AdaptiveSoilBlock extends FarmBlock {
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(MOISTURE);
-    }
-
-    private SoilTileEntity getTE(Level world, BlockPos pos) {
-        return (SoilTileEntity) world.getBlockEntity(pos);
     }
 
 }

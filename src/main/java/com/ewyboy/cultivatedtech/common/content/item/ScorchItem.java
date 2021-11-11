@@ -11,14 +11,12 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.item.Item.Properties;
-
 public class ScorchItem extends BlockItem {
 
     public static final FoodProperties SCORCH = (new FoodProperties.Builder()).nutrition(6).saturationMod(0.3f).alwaysEat().build();
 
     public ScorchItem(Properties properties) {
-        super(Register.BLOCK.scorch, properties.tab(CultivatedTech.itemGroup).food(SCORCH));
+        super(Register.BLOCK.SCORCH, properties.tab(CultivatedTech.itemGroup).food(SCORCH));
     }
 
     @Override

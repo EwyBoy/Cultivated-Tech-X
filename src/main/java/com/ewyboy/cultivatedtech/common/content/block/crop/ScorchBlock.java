@@ -2,15 +2,13 @@ package com.ewyboy.cultivatedtech.common.content.block.crop;
 
 import com.ewyboy.bibliotheca.common.loaders.ContentLoader;
 import com.ewyboy.cultivatedtech.common.content.block.crop.base.SmallBushyBlock;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.PlantType;
-
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class ScorchBlock extends SmallBushyBlock implements ContentLoader.IHasNoBlockItem {
 

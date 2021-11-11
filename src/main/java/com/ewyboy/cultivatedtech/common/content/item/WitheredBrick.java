@@ -24,18 +24,14 @@ public class WitheredBrick extends Item {
     }
 
     @Override
-    public boolean verifyTagAfterLoad(CompoundTag nbt) {
+    public void verifyTagAfterLoad(CompoundTag nbt) {
         if(nbt.contains("state")) {
             if(nbt.getInt("state") != state) {
                 nbt.putInt("state", state);
-            } else {
-                return verifyTagAfterLoad(nbt);
             }
         } else {
             nbt.putInt("state", state);
         }
-
-        return verifyTagAfterLoad(nbt);
     }
 
 }

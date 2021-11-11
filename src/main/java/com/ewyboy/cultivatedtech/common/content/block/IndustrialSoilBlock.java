@@ -1,9 +1,6 @@
 package com.ewyboy.cultivatedtech.common.content.block;
 
-import com.ewyboy.bibliotheca.compatibilities.hwyla.IWailaInfo;
 import com.ewyboy.cultivatedtech.common.register.Register;
-import mcp.mobius.waila.api.IDataAccessor;
-import mcp.mobius.waila.api.IPluginConfig;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -13,7 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
-import net.minecraft.util.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.network.chat.Component;
@@ -26,8 +22,6 @@ import net.minecraftforge.common.IPlantable;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -35,7 +29,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 
-public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo {
+public class IndustrialSoilBlock extends AdaptiveSoilBlock {
 
     private final int type;
 
@@ -58,16 +52,16 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
         if (!this.hasMoisture(world, pos, moisturizer)) {
             if (currentState > 0) {
                 switch (type) {
-                    case 1: world.setBlock(pos, Register.BLOCK.industrialSoil1.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
-                    case 2: world.setBlock(pos, Register.BLOCK.industrialSoil2.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
+                    case 1: world.setBlock(pos, Register.BLOCK.INDUSTRIAL_SOIL_1.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
+                    case 2: world.setBlock(pos, Register.BLOCK.INDUSTRIAL_SOIL_2.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
                 }
             } else if (!this.hasCrop(world, pos)) {
                 turnToSoil(world, pos);
             }
         } else if (currentState < 7) {
             switch (type) {
-                case 1: world.setBlock(pos, Register.BLOCK.industrialSoil1.defaultBlockState().setValue(MOISTURE, 7), 2); break;
-                case 2: world.setBlock(pos, Register.BLOCK.industrialSoil2.defaultBlockState().setValue(MOISTURE, 7), 2); break;
+                case 1: world.setBlock(pos, Register.BLOCK.INDUSTRIAL_SOIL_1.defaultBlockState().setValue(MOISTURE, 7), 2); break;
+                case 2: world.setBlock(pos, Register.BLOCK.INDUSTRIAL_SOIL_2.defaultBlockState().setValue(MOISTURE, 7), 2); break;
             }
         }
     }
@@ -85,21 +79,21 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
     }
 
     @Override
-    public void stepOn(Level world, BlockPos pos, Entity entity) {
+    public void stepOn(Level world, BlockPos pos, BlockState state, Entity entity) {
         if (type == 2) {
             if (!entity.fireImmune() && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
                 entity.hurt(DamageSource.HOT_FLOOR, 1.0F);
             }
         }
-        super.stepOn(world, pos, entity);
+        super.stepOn(world, pos, state, entity);
     }
 
     @Override
-    public void fallOn(Level world, BlockPos pos, Entity entity, float fallDistance) {
-        if (!world.isClientSide && entity.canTrample(world.getBlockState(pos), pos, fallDistance)) {
-            turnToSoil(world, pos);
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+        if (!level.isClientSide && entity.canTrample(level.getBlockState(pos), pos, fallDistance)) {
+            turnToSoil(level, pos);
         }
-        super.fallOn(world, pos, entity, fallDistance);
+        super.fallOn(level, state, pos, entity, fallDistance);
     }
 
     @Override
@@ -119,7 +113,7 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
     }
 
     private static void turnToSoil(Level world, BlockPos pos) {
-        world.setBlock(pos, Register.BLOCK.adaptiveSoil.defaultBlockState(), 2);
+        world.setBlock(pos, Register.BLOCK.ADAPTIVE_SOIL.defaultBlockState(), 2);
     }
 
 
@@ -137,16 +131,4 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock implements IWailaInfo
         return false;
     }
 
-    @Override
-    public void getWailaBody(List<Component> list, IDataAccessor iDataAccessor, IPluginConfig iPluginConfig) {
-        if (iDataAccessor.getPlayer().isShiftKeyDown()) {
-            list.add(new TextComponent("Moisture: " + (int) iDataAccessor.getBlockState().getValue(MOISTURE)));
-            if (iDataAccessor.getBlockState().getValue(MOISTURE) == 7) {
-                switch (type) {
-                    case 1: list.add(new TextComponent("Moisturizer: " + ChatFormatting.BLUE + "Water")); break;
-                    case 2: list.add(new TextComponent("Moisturizer: " + ChatFormatting.RED + "LAVA")); break;
-                }
-            }
-        }
-    }
 }
