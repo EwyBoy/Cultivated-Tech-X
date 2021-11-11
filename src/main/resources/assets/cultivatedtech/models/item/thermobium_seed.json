@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "cultivatedtech:item/sugarcane_seed"
+    "layer0": "cultivatedtech:item/thermobium_seed"
   }
 }
