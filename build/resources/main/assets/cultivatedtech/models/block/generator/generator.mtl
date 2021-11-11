@@ -1,9 +1,0 @@
-newmtl 0
-map_Kd cultivatedtech:block/machinebricked
-newmtl 1
-map_Kd block/item_frame
-newmtl 2
-map_Kd block/glass
-newmtl none
-Kd 1.00000 1.00000 1.00000
-d 0.50000
