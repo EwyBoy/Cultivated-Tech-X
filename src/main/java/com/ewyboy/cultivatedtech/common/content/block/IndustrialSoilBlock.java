@@ -12,14 +12,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.IPlantable;
 
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.core.Direction;
@@ -52,16 +48,16 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock {
         if (!this.hasMoisture(world, pos, moisturizer)) {
             if (currentState > 0) {
                 switch (type) {
-                    case 1: world.setBlock(pos, Register.BLOCK.INDUSTRIAL_SOIL_1.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
-                    case 2: world.setBlock(pos, Register.BLOCK.INDUSTRIAL_SOIL_2.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
+                    case 1: world.setBlock(pos, Register.BLOCKS.INDUSTRIAL_SOIL_WATER.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
+                    case 2: world.setBlock(pos, Register.BLOCKS.INDUSTRIAL_SOIL_LAVA.defaultBlockState().setValue(MOISTURE, currentState - 1), 2); break;
                 }
             } else if (!this.hasCrop(world, pos)) {
                 turnToSoil(world, pos);
             }
         } else if (currentState < 7) {
             switch (type) {
-                case 1: world.setBlock(pos, Register.BLOCK.INDUSTRIAL_SOIL_1.defaultBlockState().setValue(MOISTURE, 7), 2); break;
-                case 2: world.setBlock(pos, Register.BLOCK.INDUSTRIAL_SOIL_2.defaultBlockState().setValue(MOISTURE, 7), 2); break;
+                case 1: world.setBlock(pos, Register.BLOCKS.INDUSTRIAL_SOIL_WATER.defaultBlockState().setValue(MOISTURE, 7), 2); break;
+                case 2: world.setBlock(pos, Register.BLOCKS.INDUSTRIAL_SOIL_LAVA.defaultBlockState().setValue(MOISTURE, 7), 2); break;
             }
         }
     }
@@ -113,7 +109,7 @@ public class IndustrialSoilBlock extends AdaptiveSoilBlock {
     }
 
     private static void turnToSoil(Level world, BlockPos pos) {
-        world.setBlock(pos, Register.BLOCK.ADAPTIVE_SOIL.defaultBlockState(), 2);
+        world.setBlock(pos, Register.BLOCKS.ADAPTIVE_SOIL.defaultBlockState(), 2);
     }
 
 

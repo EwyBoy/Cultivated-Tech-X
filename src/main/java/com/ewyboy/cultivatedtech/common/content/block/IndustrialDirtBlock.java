@@ -26,7 +26,7 @@ public class IndustrialDirtBlock extends BaseBlock {
         ItemStack heldItem = player.getItemInHand(hand);
 
         if (heldItem.getItem() instanceof HoeItem) {
-            world.setBlock(pos, Register.BLOCK.ADAPTIVE_SOIL.defaultBlockState(), 11);
+            world.setBlock(pos, Register.BLOCKS.ADAPTIVE_SOIL.defaultBlockState(), 11);
             //TODO Randomize sound here
             world.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
             if (!player.isCreative()) {

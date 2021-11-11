@@ -9,7 +9,6 @@ import com.google.common.collect.ImmutableSet;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.TickingBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
@@ -45,7 +44,7 @@ public class EcoflamerTileEntity extends BlockEntity {
     private LazyOptional<IEnergyStorage> energyOptional = LazyOptional.of(() -> storage);
 
     public EcoflamerTileEntity(BlockPos pos, BlockState state) {
-        super(Register.TILE.ecoflamer, pos, state);
+        super(Register.TILES.ECOFLAMER, pos, state);
     }
 
     private static List<BlockPos> surroundingBlockList = null;

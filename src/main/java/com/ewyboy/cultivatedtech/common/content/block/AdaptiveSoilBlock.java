@@ -46,9 +46,9 @@ public class AdaptiveSoilBlock extends FarmBlock {
             } else if (currentState < 7) {
                 Material moisturizer = findMoisturizer(world, pos);
                 if (moisturizer == Material.WATER) {
-                    world.setBlockAndUpdate(pos, Register.BLOCK.INDUSTRIAL_SOIL_1.defaultBlockState().setValue(MOISTURE, 7));
+                    world.setBlockAndUpdate(pos, Register.BLOCKS.INDUSTRIAL_SOIL_WATER.defaultBlockState().setValue(MOISTURE, 7));
                 } else if (moisturizer == Material.LAVA) {
-                    world.setBlockAndUpdate(pos, Register.BLOCK.INDUSTRIAL_SOIL_2.defaultBlockState().setValue(MOISTURE, 7));
+                    world.setBlockAndUpdate(pos, Register.BLOCKS.INDUSTRIAL_SOIL_LAVA.defaultBlockState().setValue(MOISTURE, 7));
                 }
             }
         }
@@ -56,7 +56,7 @@ public class AdaptiveSoilBlock extends FarmBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? Register.BLOCK.INDUSTRIAL_DIRT.defaultBlockState() : super.getStateForPlacement(context);
+        return !this.defaultBlockState().canSurvive(context.getLevel(), context.getClickedPos()) ? Register.BLOCKS.INDUSTRIAL_DIRT.defaultBlockState() : super.getStateForPlacement(context);
     }
 
     private boolean hasCrop(Level world, BlockPos pos) {
@@ -94,7 +94,7 @@ public class AdaptiveSoilBlock extends FarmBlock {
     }
 
     private static void turnToIndustrialDirt(Level world, BlockPos pos) {
-        world.setBlock(pos, Register.BLOCK.INDUSTRIAL_DIRT.defaultBlockState(), 2);
+        world.setBlock(pos, Register.BLOCKS.INDUSTRIAL_DIRT.defaultBlockState(), 2);
     }
 
     private static boolean hasMoisture(LevelReader world, BlockPos pos) {
