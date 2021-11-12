@@ -1,22 +1,16 @@
 package com.ewyboy.cultivatedtech.common.register;
 
-import com.ewyboy.bibliotheca.common.content.fluid.BaseFluid;
-import com.ewyboy.bibliotheca.common.loaders.FluidLoader;
 import com.ewyboy.cultivatedtech.CultivatedTech;
 import com.ewyboy.cultivatedtech.common.content.block.*;
 import com.ewyboy.cultivatedtech.common.content.block.crop.*;
 import com.ewyboy.cultivatedtech.common.content.tile.EcoflamerTileEntity;
 import com.google.common.collect.Sets;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 public class Register {
 
@@ -70,21 +64,21 @@ public class Register {
 
     public static final class FLUIDS {
 
-        public static final FlowingFluid ETHANOL = new BaseFluid.Source(Properties.ETHANOL);
-        public static final FlowingFluid ETHANOL_FLOW = new BaseFluid.Flowing(Properties.ETHANOL);
+        //public static final FlowingFluid ETHANOL = new BaseFluid.Source(Properties.ETHANOL);
+        //public static final FlowingFluid ETHANOL_FLOW = new BaseFluid.Flowing(Properties.ETHANOL);
 
     }
 
     public static final class Properties {
 
-        public static final ForgeFlowingFluid.Properties ETHANOL = new ForgeFlowingFluid.Properties(
+        /*public static final ForgeFlowingFluid.Properties ETHANOL = new ForgeFlowingFluid.Properties(
                 () -> FLUIDS.ETHANOL,
                 () -> FLUIDS.ETHANOL_FLOW,
                 FluidAttributes.builder(
                         CultivatedTech.prefix("block/liquid_ethanol_still"),
                         CultivatedTech.prefix("block/liquid_ethanol_flow")
                 )
-        ).block(() -> FluidLoader.fluidBlock).bucket(() -> FluidLoader.bucketItem);
+        ).block(() -> FluidLoader.fluidBlock).bucket(() -> FluidLoader.bucketItem);*/
     }
 
 }

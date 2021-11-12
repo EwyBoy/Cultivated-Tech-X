@@ -6,7 +6,7 @@ import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
-public class EthanolBucket extends BucketItem {
+/*public class EthanolBucket extends BucketItem {
 
     public EthanolBucket() {
         super(() -> Register.FLUIDS.ETHANOL, new Item.Properties()
@@ -15,4 +15,4 @@ public class EthanolBucket extends BucketItem {
                 .craftRemainder(Items.BUCKET)
         );
     }
-}
+}*/
