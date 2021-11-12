@@ -1,23 +1,22 @@
 package com.ewyboy.cultivatedtech.common.register;
 
+import com.ewyboy.bibliotheca.common.content.fluid.BaseFluid;
+import com.ewyboy.bibliotheca.common.loaders.FluidLoader;
 import com.ewyboy.cultivatedtech.CultivatedTech;
 import com.ewyboy.cultivatedtech.common.content.block.*;
 import com.ewyboy.cultivatedtech.common.content.block.crop.*;
 import com.ewyboy.cultivatedtech.common.content.tile.EcoflamerTileEntity;
 import com.google.common.collect.Sets;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.function.Supplier;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 public class Register {
 
@@ -63,7 +62,6 @@ public class Register {
         public static final Item THERMOBIUM = new Item(new Item.Properties().tab(CultivatedTech.itemGroup));
         public static final ItemNameBlockItem THERMOBIUM_SEED = new ItemNameBlockItem(BLOCKS.THERMOBIUM, new Item.Properties().tab(CultivatedTech.itemGroup));
 
-        // public static final BucketItem testBucket = new BucketItem(FLUID.TEST_FLUID, new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(CultivatedTech.itemGroup));
     }
 
     public static final class TILES {
@@ -72,30 +70,21 @@ public class Register {
 
     public static final class FLUIDS {
 
-        // Fluid Register
-        public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, CultivatedTech.MOD_ID);
+        public static final FlowingFluid ETHANOL = new BaseFluid.Source(Properties.ETHANOL);
+        public static final FlowingFluid ETHANOL_FLOW = new BaseFluid.Flowing(Properties.ETHANOL);
 
-        private static <F extends Fluid> RegistryObject<F> createFluid(String name, Supplier<F> fluid) {
-            return FLUIDS.register(name, fluid);
-        }
+    }
 
-        //Fluid Textures
-        public static final ResourceLocation FLUID_STILL = new ResourceLocation(CultivatedTech.MOD_ID + ":block/liquid_ethanol_still");
-        public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(CultivatedTech.MOD_ID + ":block/liquid_ethanol_flow");
+    public static final class Properties {
 
-        //Fluids
-        // public static final RegistryObject<FlowingFluid> TEST_FLUID = createFluid("test_still", () -> new TestFluid.Source(FLUID.TEST_FLUID_PROPERTIES));
-        // public static final RegistryObject<FlowingFluid> TEST_FLUID_FLOWING = createFluid("test_flow", () -> new TestFluid.Flowing(FLUID.TEST_FLUID_PROPERTIES));
-
-        //Properties
-        /*public static final ForgeFlowingFluid.Properties TEST_FLUID_PROPERTIES = new ForgeFlowingFluid.Properties(
-                TEST_FLUID, TEST_FLUID_FLOWING,
-                FluidAttributes.builder(FLUID_STILL, FLUID_FLOWING)
-                    .viscosity(1000)
-                    .color(0xffffff))
-                .bucket(() -> ITEM.testBucket)
-                .block(() -> BLOCK.test
-        );*/
+        public static final ForgeFlowingFluid.Properties ETHANOL = new ForgeFlowingFluid.Properties(
+                () -> FLUIDS.ETHANOL,
+                () -> FLUIDS.ETHANOL_FLOW,
+                FluidAttributes.builder(
+                        CultivatedTech.prefix("block/liquid_ethanol_still"),
+                        CultivatedTech.prefix("block/liquid_ethanol_flow")
+                )
+        ).block(() -> FluidLoader.fluidBlock).bucket(() -> FluidLoader.bucketItem);
     }
 
 }

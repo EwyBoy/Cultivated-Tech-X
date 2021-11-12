@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "level=0" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=1" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=2" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=3" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=4" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=5" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=6" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=7" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=8" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=9" : { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=10": { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=11": { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=12": { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=13": { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=14": { "model": "cultivatedtech:block/fluids/ethanol" },
+    "level=15": { "model": "cultivatedtech:block/fluids/ethanol" }
+  }
+}
