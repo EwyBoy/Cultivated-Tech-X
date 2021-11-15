@@ -24,16 +24,20 @@ public class Register {
         public static final IndustrialSoilBlock INDUSTRIAL_SOIL_LAVA = new IndustrialSoilBlock(IndustrialSoilBlock.Properties.of(Material.DIRT), 2);
         public static final QuicksandBlock QUICKSAND = new QuicksandBlock(QuicksandBlock.Properties.of(Material.SAND));
 
-        public static final HempBlock HEMP = new HempBlock(HempBlock.Properties.of(Material.REPLACEABLE_PLANT));
-        public static final SugarcaneBlock SUGARCANE = new SugarcaneBlock(SugarcaneBlock.Properties.of(Material.REPLACEABLE_PLANT));
-        public static final RiceBlock RICE = new RiceBlock(RiceBlock.Properties.of(Material.REPLACEABLE_PLANT));
+        public static final HempBlock HEMP = new HempBlock(4, HempBlock.Properties.of(Material.REPLACEABLE_PLANT));
+        public static final SugarcaneBlock SUGARCANE = new SugarcaneBlock(4, SugarcaneBlock.Properties.of(Material.REPLACEABLE_PLANT));
+        public static final RiceBlock RICE = new RiceBlock(2, RiceBlock.Properties.of(Material.REPLACEABLE_PLANT));
+        public static final CornBlock CORN = new CornBlock(3, BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT));
+
         public static final ScorchBlock SCORCH = new ScorchBlock(ScorchBlock.Properties.of(Material.PLANT));
         public static final ThermobiumBlock THERMOBIUM = new ThermobiumBlock(ThermobiumBlock.Properties.of(Material.PLANT));
         public static final HellRootBlock HELLROOT = new HellRootBlock(HellRootBlock.Properties.of(Material.PLANT));
 
+
         public static final BaleBlock HEMP_BALE = new BaleBlock(BaleBlock.Properties.of(Material.LEAVES));
         public static final BaleBlock SUGARCANE_BALE = new BaleBlock(BaleBlock.Properties.of(Material.BAMBOO));
         public static final BaleBlock RICE_BALE = new BaleBlock(BaleBlock.Properties.of(Material.LEAVES));
+        public static final BaleBlock CORN_BALE = new BaleBlock(BaleBlock.Properties.of(Material.LEAVES));
 
         // public static final BaseFluidBlock test = new BaseFluidBlock(FLUID.TEST_FLUID);
 
@@ -46,6 +50,9 @@ public class Register {
 
         public static final Item RICE = new Item(new Item.Properties().tab(CultivatedTech.itemGroup));
         public static final ItemNameBlockItem RICE_SEED = new ItemNameBlockItem(BLOCKS.RICE, new Item.Properties().tab(CultivatedTech.itemGroup));
+
+        public static final Item CORN = new Item(new Item.Properties().tab(CultivatedTech.itemGroup));
+        public static final ItemNameBlockItem CORN_SEED = new ItemNameBlockItem(BLOCKS.CORN, new Item.Properties().tab(CultivatedTech.itemGroup));
 
         public static final Item SUGARCANE = new Item(new Item.Properties().tab(CultivatedTech.itemGroup));
         public static final ItemNameBlockItem SUGARCANE_SEED = new ItemNameBlockItem(BLOCKS.SUGARCANE, new Item.Properties().tab(CultivatedTech.itemGroup));

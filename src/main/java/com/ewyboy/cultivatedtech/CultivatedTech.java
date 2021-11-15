@@ -23,7 +23,6 @@ public class CultivatedTech {
         return new ResourceLocation(MOD_ID, path);
     }
 
-
     public static final CreativeModeTab itemGroup = new CreativeModeTab(CultivatedTech.MOD_ID) {
         @Override
         @OnlyIn(Dist.CLIENT)

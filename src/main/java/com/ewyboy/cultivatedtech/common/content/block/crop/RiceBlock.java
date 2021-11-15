@@ -27,34 +27,32 @@ import net.minecraft.server.level.ServerLevel;
 
 import java.util.Random;
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
-
 public class RiceBlock extends TallBushyBlock implements LiquidBlockContainer, ContentLoader.IHasNoBlockItem {
 
     public static final BooleanProperty IS_BOTTOM = BlockStateProperties.BOTTOM;
     public static final BooleanProperty BOOSTED = BlockStateProperties.POWERED;
 
-    public RiceBlock(Properties properties) {
-        super(properties);
+    public RiceBlock(int maxHeight, Properties properties) {
+        super(maxHeight, properties);
         this.registerDefaultState(this.defaultBlockState().setValue(IS_BOTTOM, true).setValue(BOOSTED, false));
     }
 
     @Override
-    public void tick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         int currentState = state.getValue(AGE);
-        int prob = !world.getBlockState(pos).getValue(BOOSTED) ? 4 : 8;
+        int prob = !level.getBlockState(pos).getValue(BOOSTED) ? 4 : 8;
 
-        if(world.getBlockState(pos).getValue(BOOSTED)) {
-            world.sendParticles(ParticleTypes.BUBBLE, pos.getX(), pos.getY(), pos.getZ(), 10, random.nextDouble(),random.nextDouble(), random.nextDouble(), 0.125);
+        if(level.getBlockState(pos).getValue(BOOSTED)) {
+            level.sendParticles(ParticleTypes.BUBBLE, pos.getX(), pos.getY(), pos.getZ(), 10, random.nextDouble(),random.nextDouble(), random.nextDouble(), 0.125);
         }
 
-        if(world.getBlockState(pos.below()).getBlock() == this || mayPlaceOn(state, world, pos)) {
+        if(level.getBlockState(pos.below()).getBlock() == this || mayPlaceOn(state, level, pos)) {
             if(random.nextInt(prob) == 0) {
-                if(world.isEmptyBlock(pos.above()) && currentState == 7 && canContinueToGrow(world, pos)) {
-                    world.setBlockAndUpdate(pos.above(), state.setValue(AGE, 0).setValue(IS_BOTTOM, false));
+                if(level.isEmptyBlock(pos.above()) && currentState == 7 && canContinueToGrow(level, pos)) {
+                    level.setBlockAndUpdate(pos.above(), state.setValue(AGE, 0).setValue(IS_BOTTOM, false));
                 }
                 if(currentState < 7) {
-                    world.setBlockAndUpdate(pos, state.setValue(AGE, currentState + 1).setValue(BOOSTED, false));
+                    level.setBlockAndUpdate(pos, state.setValue(AGE, currentState + 1).setValue(BOOSTED, false));
                 }
             }
         }
@@ -75,12 +73,12 @@ public class RiceBlock extends TallBushyBlock implements LiquidBlockContainer, C
     }
 
     @Override
-    public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if(entity instanceof AbstractSchoolingFish) {
             AbstractSchoolingFish fish = (AbstractSchoolingFish) entity;
 
-            if (!world.isClientSide) {
-                ServerLevel serverWorld = (ServerLevel) world;
+            if (!level.isClientSide) {
+                ServerLevel serverWorld = (ServerLevel) level;
                 //serverWorld.spawnParticle(ParticleTypes.DOLPHIN, fish.getPosX(), fish.getPosY(), fish.getPosZ(), 10,0, 0, 0, 0.125);
                 //serverWorld.spawnParticle(ParticleTypes.BUBBLE, fish.getPosX(), fish.getPosY(), fish.getPosZ(), 10,0,0, 0, 0.125);
             }
@@ -89,8 +87,8 @@ public class RiceBlock extends TallBushyBlock implements LiquidBlockContainer, C
                 fish.setFromBucket(true);
             }
 
-            if(!world.getBlockState(pos).getValue(BOOSTED)) {
-                world.setBlockAndUpdate(pos, state.setValue(BOOSTED, true));
+            if(!level.getBlockState(pos).getValue(BOOSTED)) {
+                level.setBlockAndUpdate(pos, state.setValue(BOOSTED, true));
             }
         }
     }
@@ -106,8 +104,8 @@ public class RiceBlock extends TallBushyBlock implements LiquidBlockContainer, C
     }
 
     @Override
-    public boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
-        return worldIn.getBlockState(pos.below()).getBlock() instanceof FarmBlock || worldIn.getBlockState(pos.below()).getBlock() == this;
+    public boolean mayPlaceOn(BlockState state, BlockGetter getter, BlockPos pos) {
+        return getter.getBlockState(pos.below()).getBlock() instanceof FarmBlock || getter.getBlockState(pos.below()).getBlock() == this;
     }
 
     @Override

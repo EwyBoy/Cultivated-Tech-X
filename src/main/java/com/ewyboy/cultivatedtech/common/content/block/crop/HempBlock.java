@@ -5,8 +5,8 @@ import com.ewyboy.cultivatedtech.common.content.block.crop.base.TallBushyBlock;
 
 public class HempBlock extends TallBushyBlock implements IHasNoBlockItem {
 
-    public HempBlock(Properties properties) {
-        super(properties);
+    public HempBlock(int maxHeight, Properties properties) {
+        super(maxHeight, properties);
     }
 
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "cultivatedtech:block/pattern/crosscrop",
+  "textures": {
+    "crop": "cultivatedtech:block/crop/corn/corn0"
+  }
+}

@@ -38,8 +38,8 @@ public class BushyBlock extends BushBlock implements IPlantable, BonemealableBlo
     }
 
     @Override
-    public void performBonemeal(ServerLevel world, Random random, BlockPos pos, BlockState state) {
-        this.tick(state, world, pos, random);
+    public void performBonemeal(ServerLevel serverLevel, Random random, BlockPos blockPos, BlockState state) {
+        // Raise stats for crop
     }
 
     @Override

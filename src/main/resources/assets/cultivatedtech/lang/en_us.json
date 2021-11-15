@@ -1,25 +1,36 @@
 {
   "itemGroup.cultivatedtech": "Cultivated Tech",
+
   "item.cultivatedtech.ecoflamer": "Ecoflamer",
   "item.cultivatedtech.generator": "Ethanol Generator",
-  "item.cultivatedtech.adaptivesoil": "Adaptive Soil",
-  "item.cultivatedtech.industrialdirt": "Industrial Dirt",
-  "item.cultivatedtech.industrialsoil1": "Industrial Soil",
-  "item.cultivatedtech.industrialsoil2": "Industrial Soil",
+
+  "item.cultivatedtech.adaptive_soil": "Adaptive Soil",
+  "item.cultivatedtech.industrial_dirt": "Industrial Dirt",
+  "item.cultivatedtech.industrial_soil_water": "Industrial Soil",
+  "item.cultivatedtech.industrial_soil_lava": "Industrial Soil",
   "item.cultivatedtech.quicksand": "Quicksand",
+
   "item.cultivatedtech.hemp": "Industrial Hemp",
-  "item.cultivatedtech.hempbale": "Hemp Bale",
-  "item.cultivatedtech.hempseed": "Hemp Seeds",
+  "item.cultivatedtech.hemp_bale": "Hemp Bale",
+  "item.cultivatedtech.hemp_seed": "Hemp Seeds",
+
   "item.cultivatedtech.rice": "Industrial Rice",
-  "item.cultivatedtech.ricebale": "Rice Bale",
-  "item.cultivatedtech.riceseed": "Rice Seeds",
+  "item.cultivatedtech.rice_bale": "Rice Bale",
+  "item.cultivatedtech.rice_seed": "Rice Seeds",
+
   "item.cultivatedtech.sugarcane": "Industrial Sugarcane",
-  "item.cultivatedtech.sugarcanebale": "Sugarcane Bale",
-  "item.cultivatedtech.sugarcaneseed": "Sugarcane Seeds",
+  "item.cultivatedtech.sugarcane_bale": "Sugarcane Bale",
+  "item.cultivatedtech.sugarcane_seed": "Sugarcane Seeds",
+
+  "item.cultivatedtech.corn": "Industrial Rice",
+  "item.cultivatedtech.corn_bale": "Corn Bale",
+  "item.cultivatedtech.corn_seed": "Corn Seeds",
+
   "item.cultivatedtech.scorch": "Scorch",
-  "item.cultivatedtech.scorchseed": "Scorch Seeds",
+  "item.cultivatedtech.scorch_seed": "Scorch Seeds",
+
   "item.cultivatedtech.thermobium": "Thermobium",
-  "item.cultivatedtech.thermobiumseeds": "Thermobium Seeds",
-  "item.cultivatedtech.testbucket": "I have presidential AIDS",
+  "item.cultivatedtech.thermobium_seeds": "Thermobium Seeds",
+
   "item.cultivatedtech.hellroot": "Hell Roots"
 }

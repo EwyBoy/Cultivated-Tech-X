@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-        "model": "cultivatedtech:block/industrial_dirt"
+        "model": "cultivatedtech:block/soil/industrial_dirt"
     }
   }
 }

@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "cultivatedtech:block/sugarcane_block_end",
-    "side": "cultivatedtech:block/sugarcane_block_side"
-  }
-}

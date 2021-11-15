@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "age=0,state=bot": { "model": "cultivatedtech:block/crop/corn/corn0" },
+    "age=1,state=bot": { "model": "cultivatedtech:block/crop/corn/corn1" },
+    "age=2,state=bot": { "model": "cultivatedtech:block/crop/corn/corn2" },
+    "age=3,state=bot": { "model": "cultivatedtech:block/crop/corn/corn3" },
+    "age=4,state=bot": { "model": "cultivatedtech:block/crop/corn/corn4" },
+    "age=5,state=bot": { "model": "cultivatedtech:block/crop/corn/corn5" },
+    "age=6,state=bot": { "model": "cultivatedtech:block/crop/corn/corn6" },
+    "age=7,state=bot": { "model": "cultivatedtech:block/crop/corn/corn7" },
+
+    "age=0,state=mid": { "model": "cultivatedtech:block/crop/corn/corn1" },
+    "age=1,state=mid": { "model": "cultivatedtech:block/crop/corn/corn2" },
+    "age=2,state=mid": { "model": "cultivatedtech:block/crop/corn/corn8" },
+    "age=3,state=mid": { "model": "cultivatedtech:block/crop/corn/corn9" },
+    "age=4,state=mid": { "model": "cultivatedtech:block/crop/corn/corn10" },
+    "age=5,state=mid": { "model": "cultivatedtech:block/crop/corn/corn11" },
+    "age=6,state=mid": { "model": "cultivatedtech:block/crop/corn/corn12" },
+    "age=7,state=mid": { "model": "cultivatedtech:block/crop/corn/corn13" },
+
+    "age=0,state=top": { "model": "cultivatedtech:block/crop/corn/corn0" },
+    "age=1,state=top": { "model": "cultivatedtech:block/crop/corn/corn1" },
+    "age=2,state=top": { "model": "cultivatedtech:block/crop/corn/corn2" },
+    "age=3,state=top": { "model": "cultivatedtech:block/crop/corn/corn9" },
+    "age=4,state=top": { "model": "cultivatedtech:block/crop/corn/corn10" },
+    "age=5,state=top": { "model": "cultivatedtech:block/crop/corn/corn11" },
+    "age=6,state=top": { "model": "cultivatedtech:block/crop/corn/corn12" },
+    "age=7,state=top": { "model": "cultivatedtech:block/crop/corn/corn14" }
+  }
+}

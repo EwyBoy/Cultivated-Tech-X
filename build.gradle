@@ -31,10 +31,17 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            ideaModule "${project.name}.main"
             property 'fml.earlyprogresswindow', 'false'
             mods {
-                worldstripper {
+                cultivatedtech {
                     source sourceSets.main
+                }
+                bibliotheca {
+                    source project(":Bibliotheca").sourceSets.main
+                }
+                quickharvest {
+                    source project(":Quick-Harvest").sourceSets.main
                 }
             }
         }
@@ -42,8 +49,14 @@ minecraft {
         server {
             workingDirectory project.file('run')
             mods {
-                worldstripper {
+                cultivatedtech {
                     source sourceSets.main
+                }
+                bibliotheca {
+                    source project(":Bibliotheca").sourceSets.main
+                }
+                quickharvest {
+                    source project(":Quick-Harvest").sourceSets.main
                 }
             }
         }
@@ -51,8 +64,14 @@ minecraft {
         data {
             workingDirectory project.file('run')
             mods {
-                worldstripper {
+                cultivatedtech {
                     source sourceSets.main
+                }
+                bibliotheca {
+                    source project(":Bibliotheca").sourceSets.main
+                }
+                quickharvest {
+                    source project(":Quick-Harvest").sourceSets.main
                 }
             }
         }
@@ -72,9 +91,10 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${MC_VERSION}-${FORGE_VERSION}"
-    implementation fg.deobf("curse.maven:bibliotheca-268210:${BIBLIOTHECA}")
     implementation fg.deobf("curse.maven:worldstripper-250603:${WORLD_STRIPPER}")
     implementation fg.deobf("curse.maven:itank-256991:${ITANK}")
+    implementation project(':Quick-Harvest')
+    implementation project(':Bibliotheca')
 }
 
 jar {
