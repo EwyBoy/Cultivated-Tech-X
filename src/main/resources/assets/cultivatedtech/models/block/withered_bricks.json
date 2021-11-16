@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "cultivatedtech:block/machinebricked"
+    "all": "cultivatedtech:block/material/machinebricked"
   }
 }

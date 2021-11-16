@@ -32,7 +32,7 @@ import java.util.Random;
 public class TallBushyBlock extends BushyBlock implements IHasAge {
 
     public final int MAX_HEIGHT;
-    public static final int MAX_AGE = 7;
+    private static final int MAX_AGE = 7;
     public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
 
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);

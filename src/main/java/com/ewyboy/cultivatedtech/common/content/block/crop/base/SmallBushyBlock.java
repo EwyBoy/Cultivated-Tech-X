@@ -1,5 +1,6 @@
 package com.ewyboy.cultivatedtech.common.content.block.crop.base;
 
+import com.ewyboy.cultivatedtech.common.content.block.crop.interfaces.IHasAge;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -22,9 +23,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Random;
 
-public class SmallBushyBlock extends BushyBlock {
+public class SmallBushyBlock extends BushyBlock implements IHasAge {
 
     public static final IntegerProperty AGE = BlockStateProperties.AGE_2;
+    private static final int MAX_AGE = 7;
     protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
     public SmallBushyBlock(Properties properties) {
@@ -37,6 +39,31 @@ public class SmallBushyBlock extends BushyBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
+    }
+
+    @Override
+    public IntegerProperty getAgeProperty() {
+        return AGE;
+    }
+
+    @Override
+    public int getMaxAge() {
+        return MAX_AGE;
+    }
+
+    @Override
+    public int getAge(BlockState state) {
+        return state.getValue(this.getAgeProperty());
+    }
+
+    @Override
+    public BlockState setStateForAge(int age) {
+        return this.defaultBlockState().setValue(this.getAgeProperty(), age);
+    }
+
+    @Override
+    public boolean isMaxAge(BlockState state) {
+        return state.getValue(this.getAgeProperty()) >= this.getMaxAge();
     }
 
     @Override
