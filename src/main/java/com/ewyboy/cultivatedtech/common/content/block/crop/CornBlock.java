@@ -7,9 +7,12 @@ import com.ewyboy.cultivatedtech.common.states.ThreeState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.Material;
 
 import java.util.Random;
 
@@ -17,8 +20,8 @@ public class CornBlock extends TallBushyBlock implements ContentLoader.IHasNoBlo
 
     public static final EnumProperty<ThreeState> STATE = PlantStateProperties.THREE_STATE;
 
-    public CornBlock(int maxHeight, Properties properties) {
-        super(maxHeight, properties);
+    public CornBlock(int maxHeight, Properties of) {
+        super(maxHeight, of);
         this.registerDefaultState(this.defaultBlockState().setValue(STATE, ThreeState.BOT));
     }
 

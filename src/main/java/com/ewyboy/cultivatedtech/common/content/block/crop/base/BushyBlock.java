@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
@@ -22,9 +23,6 @@ public class BushyBlock extends BushBlock implements IPlantable, BonemealableBlo
 
     public BushyBlock(Properties properties) {
         super(properties);
-        properties.randomTicks();
-        properties.noCollission();
-        properties.noOcclusion();
     }
 
     @Override

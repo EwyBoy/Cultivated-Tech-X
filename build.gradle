@@ -43,6 +43,9 @@ minecraft {
                 quickharvest {
                     source project(":Quick-Harvest").sourceSets.main
                 }
+                devkit {
+                    source project(":Developers-Toolkit").sourceSets.main
+                }
             }
         }
 
@@ -58,6 +61,9 @@ minecraft {
                 quickharvest {
                     source project(":Quick-Harvest").sourceSets.main
                 }
+                devkit {
+                    source project(":Developers-Toolkit").sourceSets.main
+                }
             }
         }
 
@@ -72,6 +78,9 @@ minecraft {
                 }
                 quickharvest {
                     source project(":Quick-Harvest").sourceSets.main
+                }
+                devkit {
+                    source project(":Developers-Toolkit").sourceSets.main
                 }
             }
         }
@@ -93,6 +102,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${MC_VERSION}-${FORGE_VERSION}"
     implementation fg.deobf("curse.maven:worldstripper-250603:${WORLD_STRIPPER}")
     implementation fg.deobf("curse.maven:itank-256991:${ITANK}")
+    implementation project(':Developers-Toolkit')
     implementation project(':Quick-Harvest')
     implementation project(':Bibliotheca')
 }

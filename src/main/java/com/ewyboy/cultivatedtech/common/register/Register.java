@@ -8,6 +8,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
@@ -27,7 +28,7 @@ public class Register {
         public static final HempBlock HEMP = new HempBlock(4, HempBlock.Properties.of(Material.REPLACEABLE_PLANT));
         public static final SugarcaneBlock SUGARCANE = new SugarcaneBlock(4, SugarcaneBlock.Properties.of(Material.REPLACEABLE_PLANT));
         public static final RiceBlock RICE = new RiceBlock(2, RiceBlock.Properties.of(Material.REPLACEABLE_PLANT));
-        public static final CornBlock CORN = new CornBlock(3, BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT));
+        public static final CornBlock CORN = new CornBlock(3, CornBlock.Properties.of(Material.REPLACEABLE_PLANT).noCollission().noOcclusion().sound(SoundType.CROP));
 
         public static final ScorchBlock SCORCH = new ScorchBlock(ScorchBlock.Properties.of(Material.PLANT));
         public static final ThermobiumBlock THERMOBIUM = new ThermobiumBlock(ThermobiumBlock.Properties.of(Material.PLANT));

@@ -40,8 +40,6 @@ public class TallBushyBlock extends BushyBlock implements IHasAge {
     public TallBushyBlock(int maxHeight, Properties properties) {
         super(properties);
         this.MAX_HEIGHT = maxHeight;
-        properties.strength(0.3f);
-        properties.sound(SoundType.CROP);
         registerDefaultState(this.defaultBlockState().setValue(AGE, 0));
     }
 

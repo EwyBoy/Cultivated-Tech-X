@@ -31,8 +31,6 @@ public class SmallBushyBlock extends BushyBlock implements IHasAge {
 
     public SmallBushyBlock(Properties properties) {
         super(properties);
-        properties.strength(0.3f);
-        properties.sound(SoundType.GRASS);
         registerDefaultState(this.defaultBlockState().setValue(AGE, 0));
     }
 
